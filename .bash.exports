@@ -1,5 +1,7 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+if [ 0 -ne 0 ]; then
+
 # Make vim the default editor.
 export EDITOR='vim';
 
@@ -31,3 +33,5 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+
+fi # if [ 0 -ne 0 ]; then

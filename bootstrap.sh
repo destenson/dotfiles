@@ -5,8 +5,15 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin master;
 
 function doIt() {
-	rsync --exclude ".git/" --exclude "bootstrap.sh" \
-		--exclude "README.md" --exclude "LICENSE-MIT.txt" -avh --no-perms . ~;
+	local pwd=$PWD
+	for file in .bash* ; do
+		cp -a ${pwd}/$file ~/$file
+		#if ! -e ~/$file ; then
+		#	ln -sf ${pwd}/$file ~/$file
+		#fi
+	done;
+#	rsync --exclude ".git/" --exclude "bootstrap.sh" \
+#		--exclude "README.md" --exclude "LICENSE-MIT.txt" -avh --no-perms . ~;
 	source ~/.bash_profile;
 }
 

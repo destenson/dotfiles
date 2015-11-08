@@ -7,60 +7,55 @@
 # with this software. 
 # If not, see <http://creativecommons.org/publicdomain/zero/1.0/>. 
 
-# base-files version 4.2-3
+# base-files version 4.2-3 (copied from cygwin and modified)
 
 # ~/.bash_profile: executed by bash(1) for login shells.
 
-# The latest version as installed by the Cygwin Setup program can
-# always be found at /etc/defaults/etc/skel/.bash_profile
+[ -z "$PS1" ] && return
 
-# Modifying /etc/skel/.bash_profile directly will prevent
-# setup from updating it.
+OS=$(uname -s)
+if [ "$OS" = "Darwin" ]; then
+    OS="OSX"
+fi
 
-# The copy in your home directory (~/.bash_profile) is yours, please
-# feel free to customise it to create a shell
-# environment to your liking.  If you feel a change
-# would be benifitial to all, please feel free to send
-# a patch to the cygwin mailing list.
+# Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
+
+READLINK=$((which greadlink || which readlink) 2> /dev/null)
+CURRENT_SCRIPT=$BASH_SOURCE
+
+if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
+    SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
+    DOTFILES_DIR=$(dirname "$SCRIPT_PATH")
+elif [ -d "$HOME/.dotfiles" ]; then
+    DOTFILES_DIR="$HOME/.dotfiles"
+else
+    echo "Unable to find dotfiles, exiting."
+    return # `exit 1` would quit the shell itself
+fi
+
+#echo $SCRIPT_PATH $DOTFILES_DIR
 
 # User dependent .bash_profile file
 
 # source the users bashrc if it exists
 if [ -f "${HOME}/.bashrc" ] ; then
-  source "${HOME}/.bashrc"
+  echo "Sourcing ${HOME}/.bashrc" && source "${HOME}/.bashrc"
 fi
 
-add_to_path() {
-  local path_var="$1"
-  local to_add="$2"
-  if [ -d $to_add ]; then							# if directory to add exists
-    local cur_path=$(eval echo -n "\$$1")			# evaluate the current contents of the variable
-    if [[ $cur_path != *$to_add* ]]; then			# if the directory isn't already there
-  	  eval export $path_var=${to_add}:${cur_path}	# add it
-    fi
-  fi
-}
-
-# Set PATH so it includes user's private bin if it exists
-add_to_path PATH "${HOME}/bin"
-
-# Set MANPATH so it includes users' private man if it exists
-add_to_path MANPATH "${HOME}/man"
-
-# Set INFOPATH so it includes users' private info if it exists
-add_to_path INFOPATH "${HOME}/info"
-
-# Set DFT specific path
-add_to_path PATH "${HOME}/.dft/bin"
-
-unset add_to_path
+for dotfile in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,completion,grep,prompt,nvm,rvm,custom}; do
+    [ -f "$DOTFILE" ] && . "$DOTFILE"
+done
 
 # Load the shell dotfiles, and then some:
 # any file called ~/.bash*.user can be used to extend this file locally without being checked into git
-for file in ~/.bash.{path,prompt,exports,aliases,functions,*} ~/.bash*.user; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+for file in ~/.bash.{path,prompt,exports,aliases,functions} ~/.bash{.path,.prompt,.exports,.aliases,.functions,*}.user; do
+	[ -r "$file" ] && [ -f "$file" ] && echo "Sourcing $file" && source "$file";
 done;
 unset file;
+
+return
+
+
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;

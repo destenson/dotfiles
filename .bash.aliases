@@ -1,5 +1,7 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+if [ 0 -ne 0 ]; then
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -149,3 +151,5 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
+
+fi # if [ 0 -ne 0 ]; then

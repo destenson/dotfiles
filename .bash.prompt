@@ -5,7 +5,7 @@
 # Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
 # iTerm → Profiles → Text → use 13pt Monaco with 1.1 vertical spacing.
 
-# this breaks Git Bash so it's "commented out" by the following line and the last one in the file
+# this breaks Git Bash on Windows so it's "commented out" by the following line and the last one in the file
 if [ 0 -ne 0 ]; then
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then

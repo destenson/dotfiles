@@ -1,5 +1,7 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+if [ 0 -ne 0 ]; then
+
 # Simple calculator
 function calc() {
 	local result="";
@@ -248,3 +250,5 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+fi # if [ 0 -ne 0 ]; then
