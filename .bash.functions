@@ -1,3 +1,5 @@
+# Autoincluded by .bash_profile (TODO: review this file)
+
 # Simple calculator
 function calc() {
 	local result="";
@@ -21,10 +23,10 @@ function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
-# Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
-}
+## Change working directory to the top-most Finder window location
+#function cdf() { # short for `cdfinder`
+#	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+#}
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
@@ -95,6 +97,7 @@ function gitio() {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
+# (Requires Python.)
 function server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &
@@ -104,7 +107,7 @@ function server() {
 }
 
 # Start a PHP server from a directory, optionally specifying the port
-# (Requires PHP 5.4.0+.)
+# (Requires *nix & PHP 5.4.0+.)
 function phpserver() {
 	local port="${1:-4000}";
 	local ip=$(ipconfig getifaddr en1);
@@ -114,6 +117,7 @@ function phpserver() {
 
 # Compare original and gzipped file size
 function gz() {
+echo "TODO: validate input"
 	local origsize=$(wc -c < "$1");
 	local gzipsize=$(gzip -c "$1" | wc -c);
 	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
