@@ -4,3 +4,8 @@
 .idea
 node_modules
 bower_components
+*.pyc
+.repopickle_*
+*.suo
+*.user
+*.bak

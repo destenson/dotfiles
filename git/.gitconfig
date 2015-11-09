@@ -1,15 +1,17 @@
 [user]
-    name = Lars Kappert
-    email = lars@webpro.nl
+	name = First Last
+	email = flast@email.com
 
-[github]
-    user = webpro
+#[github]
+#    user = flast
 
 [core]
     excludesfile = ~/.gitignore_global
     editor = vim
     filemode = false
     trustctime = false
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab	# Which whitespace problems should git recognize: any whitespace at the end of a line, and mixed spaces and tabs
 
 [alias]
     st = status
@@ -36,7 +38,7 @@
     diff = diff-highlight | less
 
 [color]
-    ui = auto
+	ui = auto	# enable colors if possible
 [color "branch"]
     current = yellow reverse
     local = yellow
@@ -57,7 +59,7 @@
     newHighlight = "green bold 22"
 
 [credential]
-    helper = osxkeychain
+	helper = wincred
 
 [grep]
     lineNumber = true
@@ -72,28 +74,42 @@
     prompt = false
 
 [push]
-    default = simple
+	default = tracking	# When pushing without giving a refspec, push the current branch to its upstream branch. See the git config man page for more possible options.
+#[push]
+#    default = simple
 
 [fetch]
   prune = true
 
 [diff]
-    renames = copies
-    tool = Kaleidoscope
-[difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path = 
+	renames = copies		# Allow git diff to do basic rename and copy detection (see man page for details)
+	mnemonicprefix = true	# Tell git diff to use mnemonic prefixes ([i]ndex, [w]ork tree, [c]ommit, [o]bject) instead of the standard a and b notation (see man page for details)
+#[diff]
+#	tool = Kaleidoscope
+#[difftool "Kaleidoscope"]
+#	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+#[difftool "sourcetree"]
+#	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+#	path = 
 
 [merge]
-    tool = Kaleidoscope
-    conflictstyle = diff3
-    defaultToUpstream = true
-[mergetool "Kaleidoscope"]
-    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+	conflictstyle = diff3
+	defaultToUpstream = true
+	stat = true	# Always show a diffstat at the end of a merge:
+#	tool = Kaleidoscope
+#[mergetool "Kaleidoscope"]
+#	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+#	trustExitCode = true
+#[mergetool "sourcetree"]
+#	2cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+#	trustExitCode = true
+
+[branch]
+	autosetupmerge = true	# When branching off a remote branch, automatically let the local branch track the remote branch (see man page for details)
+
+[rerere]
+	enabled = true	# Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+#[advice]
+#	pushNonFastForward = false	# Disable the advice shown by Git when you attempt to push something that’s not fast forward-able
+#	statusHints = false	# Disable "how to stage/unstage/add" hints given by git status
 
