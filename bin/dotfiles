@@ -13,10 +13,10 @@ sub_help () {
     echo "   reload             Reload dotfiles"
     echo "   test               Run tests"
     echo "   update             Update packages and pkg managers (OS, brew, npm, gem, pip)"
-    echo "   osx                Apply OS X system defaults"
-    echo "   dock               Apply OS X Dock settings"
-    echo "   install mjolnir    Install Mjolnir (Homebrew/Luarocks)"
-    echo "   install vundle     Install Vundle"
+    #echo "   osx                Apply OS X system defaults"
+    #echo "   dock               Apply OS X Dock settings"
+    #echo "   install mjolnir    Install Mjolnir (Homebrew/Luarocks)"
+    #echo "   install vundle     Install Vundle"
 }
 
 sub_edit () {
@@ -60,9 +60,8 @@ sub_install () {
     [ -f "$SCRIPT" ] && . "$SCRIPT" || echo "Unable to find script to install $SUB_COMMAND_NAME"
 }
 
-# Make sure to keep this in sync with the available public commands
-
 sub_completion () {
+	# Make sure to keep this in sync with the available public commands
     echo "help edit reload test update osx dock install"
 }
 
