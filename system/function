@@ -1,11 +1,13 @@
-# Get named var (usage: get "VAR_NAME")
 
+
+
+
+# Get named var (usage: get "VAR_NAME")
 get() {
     echo "${!1}"
 }
 
 # Executable
-
 is-executable() {
     local BIN=$(command -v "$1" 2>/dev/null)
     if [[ ! $BIN == "" && -x $BIN ]]; then true; else false; fi
@@ -24,13 +26,20 @@ is-supported() {
 }
 
 # Add to path
+prepend-to-path() {
+  local path_var="$1"								# the name of the PATH variable (such as "PATH")
+  local to_add="$2"									# the directory to add the to given PATH variable
+  if [ -d "$to_add" ]; then							# if directory to add exists
+    local cur_path=`eval echo -n "\$$1"`			# evaluate the current contents of the variable
+    eval "$path_var=${to_add}:${cur_path}"			# add it
+  fi
+}
 
 prepend-path() {
-    [ -d $1 ] && PATH="$1:$PATH"
+  prepend-to-path PATH "$1"
 }
 
 # Show 256 TERM colors
-
 colors() {
   local X=$(tput op)
   local Y=$(printf %$((COLUMNS-6))s)
@@ -41,7 +50,16 @@ colors() {
 }
 
 # Calculator
-
 calc() {
     echo "$*" | bc -l;
 }
+
+# Code sourcer
+src() {
+  if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
+    [ -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
+  else
+    [ -r "$*" ] && source "$*"
+  fi
+}
+

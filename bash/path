@@ -1,17 +1,7 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
 
-
-add_to_path() {
-  local path_var="$1"								# the name of the PATH variable (such as "PATH")
-  local to_add="$2"									# the directory to add the to given PATH variable
-  if [ -d $to_add ]; then							# if directory to add exists
-    local cur_path=$(eval echo -n "\$$1")			# evaluate the current contents of the variable
-    #if [[ $cur_path != *$to_add* ]]; then			# if the directory isn't already there
-  	  eval export $path_var=${to_add}:${cur_path}	# add it
-	#fi
-  fi
-}
+if [ 0 -ne 0 ]; then
 
 add_to_path PATH "/bin"
 add_to_path PATH "/usr/bin"
@@ -22,6 +12,9 @@ add_to_path PATH "/sbin"
 add_to_path PATH "/usr/sbin"
 add_to_path PATH "/usr/local/sbin"
 
+prepend-path "/bin"
+prepend-path "/usr/bin"
+prepend-path "/usr/local/bin"
 prepend-path "/sbin"
 prepend-path "/usr/sbin"
 prepend-path "/usr/local/sbin"
@@ -46,4 +39,6 @@ PATH=`echo -n $PATH | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":"
 
 export PATH
 
-#EOF #.bash.path
+fi # if [ 0 -ne 0 ]; then
+
+#EOF 

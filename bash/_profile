@@ -16,12 +16,16 @@
 # if not running an interactive shell, don't do any of this
 [ -z "$PS1" ] && return
 
+# Comment out the following to silence the statement printed each time a file is sourced
+VERBOSE_SOURCING=true
 
 # set an OS variable to `uname -s`
 OS=$(uname -s)
-if [ "$OS" = "Darwin" ]; then
-    OS="OSX"
-fi
+case $OS in
+  Darwin) OS="OSX";;
+  MINGW*) OS="Win-GitBash";;
+  CYGWIN*) OS="Win-Cygwin";;
+esac
 export OS
 
 
@@ -29,81 +33,62 @@ export OS
 READLINK=$((which greadlink || which readlink) 2> /dev/null)
 CURRENT_SCRIPT=$BASH_SOURCE
 if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
-    SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
-    DOTFILES_DIR=$(dirname "$SCRIPT_PATH")
+  SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
+  DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
 elif [ -d "$HOME/.dotfiles" ]; then
-    DOTFILES_DIR="$HOME/.dotfiles"
+  DOTFILES_DIR="$HOME/.dotfiles"
 else
-    echo "Unable to find dotfiles, exiting."
-    return # `exit 1` would quit the shell itself
+  echo "Unable to find dotfiles, exiting."
+  return # `exit 1` would quit the shell itself
 fi
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
 
 
-# Set LSCOLORS
-eval "$(dircolors "$DOTFILES_DIR"/system/.dir_colors)"
-
-# helper function for including a source file if it exists
-src(){
-	[ -f "$*" ] && echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\"" || echo "Failed to source: \"$*\""
-}
-
-
 # Hook for extra/custom stuff
 EXTRA_DIR="$HOME/.extra"
 if [ -d "$EXTRA_DIR" ]; then
-    for EXTRAFILE in "$EXTRA_DIR"/bin/*.sh; do
-		src "$EXTRAFILE"
-    done
-	unset EXTRAFILE
+  for EXTRAFILE in "$EXTRA_DIR"/bin/*.{sh,[iI],inc}; do
+    src "$EXTRAFILE"
+  done
+  unset EXTRAFILE
 fi
 export EXTRA_DIR
 
+## source the users bashrc if it exists
+#src "${HOME}/.bashrc"
 
-# source the users bashrc if it exists
-if [ -f "${HOME}/.bashrc" ] ; then
-  echo "Sourcing ${HOME}/.bashrc" && source "${HOME}/.bashrc"
-fi
+for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path}; do
+  [ -r "$dotfile" ] && source "$dotfile"
+done
+unset dotfile
 
-for dotfile in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,completion,grep,prompt,nvm,rvm,custom}; do
-    [ -f "$dotfile" ] && . "$dotfile"
+return
+
+# source dotfiles from the system folder
+for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path,env,alias,completion,grep,prompt,custom}; do
+  [ -r "$dotfile" ] && source "$dotfile"
+done
+unset dotfile
+
+
+# source dotfiles from the bash folder
+for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,env,*}; do
+  if [ "x$dotfile" != "x_profile*" ]; then
+    src "$dotfile"
+  fi
 done
 unset dotfile
 
 # Load the shell dotfiles, and then some:
 # any file called ~/.bash*.user can be used to extend this file locally without being checked into git
-for file in ~/.bash.{path,prompt,exports,aliases,functions} ~/.bash{.path,.prompt,.exports,.aliases,.functions,*}.user; do
-	[ -r "$file" ] && [ -f "$file" ] && echo "Sourcing $file" && source "$file";
-done;
-unset file;
+for dotfile in ~/.bash*.user; do
+  src "$dotfile"
+done
+unset dotfile;
 
 
 if [ 0 -ne 0 ]; then
-
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
-
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend;
-
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell;
-
-# Enable some Bash 4 features when possible:
-# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
-# * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null;
-done;
-unset option
-
-## Add tab completion for many Bash commands
-#if which brew > /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
-#	source "$(brew --prefix)/share/bash-completion/bash_completion";
-#elif [ -f /etc/bash_completion ]; then
-#	source /etc/bash_completion;
-#fi;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
