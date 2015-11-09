@@ -1,5 +1,11 @@
 ## Prompt (TODO: review)
 
+if echo $OS | grep "Git Bash" > /dev/null; then
+# Git Bash already configures the prompt, so skip this file
+	#echo "In Git Bash: skipping prompt config file"
+	true
+else
+
 _bash_prompt_config() {
 
     local USER_SYMBOL="\u"
@@ -102,3 +108,5 @@ _bash_prompt_config
 unset _bash_prompt_config
 
 PROMPT_COMMAND=bash_prompt_command
+
+fi

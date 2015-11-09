@@ -6,11 +6,14 @@ alias v="vim"
 alias rr="rm -rf"
 alias json="json -c"
 
+alias et="echo true"
+alias ef="echo false"
+
 is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
 # Global aliases
 
-if $(is-supported "alias -g"); then
+if is-supported "alias -g"; then
     alias -g G="| grep -i"
     alias -g H="| head"
     alias -g T="| tail"

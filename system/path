@@ -1,5 +1,16 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+if ! is-executable python; then
+  echo python is not executable
+  if is-windows; then
+    is-git-bash && [ -x /c/Python*/python.exe ] && prepend-path /c/Python*
+    is-cygwin && [ -x /cygdrive/c/Python*/python.exe ] && prepend-path /cygdrive/c/Python*
+  fi
+  #TODO: check 
+fi
+
+if [ 0 -ne 0 ]; then
+
 prepend-path "/bin"
 prepend-path "/usr/bin"
 prepend-path "/usr/local/bin"
@@ -12,11 +23,29 @@ prepend-path "/usr/local/sbin"
 # Set work specific path
 prepend-path "${HOME}/.work/bin"
 
-# Remove duplicates (preserving prepended items)
-# Source: http://unix.stackexchange.com/a/40755
-PATH=`echo -n $PATH | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
+if ! is-executable python; then
+  # TODO
+fi
+
+# Remove duplicates from PATH
+if is-executable awk; then
+  # I don't know which of the following is better
+  
+  # Remove duplicates (preserving prepended items)
+  # Source: http://unix.stackexchange.com/a/40755
+  PATH=`echo -n $PATH | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
+
+  # Source: http://stackoverflow.com/questions/1872692/removing-duplicates-on-a-variable-without-sorting
+  #PATH=$(awk 'BEGIN{RS=ORS=":"}!a[$0]++' <<<$PATH)
+else
+  IFS=', ' read -r -a array <<< "$PATH"
+  # now we have an array of paths in array
+  PATH="$PATH"
+fi
 
 # Wrap up
 export PATH
+
+fi # if [ 0 -ne 0 ]; then
 
 #EOF

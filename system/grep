@@ -7,11 +7,11 @@ fi
 # Avoid VCS folders
 
 if is-supported "echo | grep --exclude-dir=.cvs ''"; then
-    for PATTERN in .cvs .git .hg .svn; do
+    for PATTERN in .cvs .git .hg .svn .repo; do
         GREP_OPTIONS+=" --exclude-dir=$PATTERN"
     done
 elif is-supported "echo | grep --exclude=.cvs ''"; then
-    for PATTERN in .cvs .git .hg .svn; do
+    for PATTERN in .cvs .git .hg .svn .repo; do
         GREP_OPTIONS+=" --exclude=$PATTERN"
     done
 fi

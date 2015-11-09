@@ -1,0 +1,9 @@
+# Platform finders
+
+alias is-linux='str-contains "$OS" "Linux"'
+alias is-mac='str-contains "$OS" "Darwin" | str-contains "$OS" "OSX"'
+alias is-git-bash='str-contains "$OS" "Git Bash"'
+alias is-cygwin='str-contains "$OS" "Cygwin"'
+alias is-windows='str-contains "$OS" "W32" | str-contains "$OS" "W64" | str-contains "$OS" "WIN"'
+alias is-windows-nt='str-contains "$OS" "_NT"'
+
