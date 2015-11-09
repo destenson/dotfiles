@@ -19,13 +19,15 @@
 # Comment out the following to silence the statement printed each time a file is sourced
 VERBOSE_SOURCING=true
 
-# set an OS variable to `uname -s`
-OS=$(uname -s)
-case $OS in
-  Darwin) OS="OSX";;
-  MINGW*) OS="Win-GitBash";;
-  CYGWIN*) OS="Win-Cygwin";;
+# Update the OS variable
+osname=$(uname -s)
+case $osname in
+  Darwin) OS="$OS (OSX)";;
+  MINGW*) OS="$OS (Git Bash)";;
+  CYGWIN*) OS="$OS (Cygwin)";;
+  *) OS="$OS ($osname)"
 esac
+unset osname
 export OS
 
 
@@ -58,12 +60,6 @@ export EXTRA_DIR
 ## source the users bashrc if it exists
 #src "${HOME}/.bashrc"
 
-for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path}; do
-  [ -r "$dotfile" ] && source "$dotfile"
-done
-unset dotfile
-
-return
 
 # source dotfiles from the system folder
 for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path,env,alias,completion,grep,prompt,custom}; do
@@ -71,10 +67,12 @@ for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path,env,alias,comple
 done
 unset dotfile
 
+return
+
 
 # source dotfiles from the bash folder
 for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,env,*}; do
-  if [ "x$dotfile" != "x_profile*" ]; then
+  if [ "x$dotfile" != "x_profile*" ]; then #TODO: change this to a case cuz this won't work as is
     src "$dotfile"
   fi
 done
