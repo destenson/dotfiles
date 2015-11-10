@@ -1,24 +1,31 @@
-#!/bin/sh
-EXE_NAME=create_prog.sh
-. cmn.inc
+#!/bin/bash
+
+EXE_NAME=$0
+#. cmn.inc
 
 TESTING=yes
 
-REPLACE_EXISTING_TREE=no
-TREE_DIR=./programming
-LOCAL_MANIFEST=~/git-repos/initial
+# TODO: take an existing repo init command line and mirror it
 
-echo "not finished"
-exit 1
+cmdline="mirror-repo.sh init -b release -m LA.BF64.1.2.1.c1-02410-8x94.0.xml -u git://codeaurora.org/platform/manifest.git --repo-url=git://codeaurora.org/tools/repo.git"
+#cmdline="$*"
+
+cmdline="${cmdline} --mirror"
+
+echo $EXE_NAME && exit 1
 
 replace_existing_tree_ok()
 {
-	[ "x$REPLACE_EXISTING_TREE" == "xyes" ]
+	if [ "x$REPLACE_EXISTING_TREE" == "xyes" ]; then
+		return 0
+	else
+		return 1
+	fi
 }
 
 replace_existing_tree()
 {
-	if [[ replace_existing_tree_ok && -e $TREE_DIR ]]; then
+	if [[ replace_existing_tree && -e $TREE_DIR ]]; then
 		echo "Removing old programming directory"
 		#TODO: Check if there are unsaved changes
 		rm -rf $TREE_DIR
