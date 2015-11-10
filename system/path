@@ -1,6 +1,6 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
-if [ 0 -ne 0 ]; then
+if [ 0 -eq 0 ]; then
 
 prepend-path "/bin"
 prepend-path "/usr/bin"
@@ -16,7 +16,7 @@ prepend-path "${HOME}/.work/bin"
 
 # Add a path for python
 if ! is-executable python; then
-  echo python is not executable
+  #echo python is not executable
   if is-windows; then
     is-git-bash && { [ -x /c/Python*/python.exe ] && prepend-path /c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }
     is-cygwin && { [ -x /cygdrive/c/Python*/python.exe ] && prepend-path /cygdrive/c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }

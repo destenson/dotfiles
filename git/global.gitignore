@@ -1,0 +1,5 @@
+*.pyc
+.repopickle_*
+*.suo
+*.user
+*.bak
