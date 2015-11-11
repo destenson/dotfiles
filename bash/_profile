@@ -20,14 +20,12 @@
 VERBOSE_SOURCING=true
 
 # Update the OS variable
-osname=$(uname -s)
-case $osname in
-  Darwin) OS="$OS (OSX)";;
-  MINGW*) OS="$OS (Git Bash)";;
-  CYGWIN*) OS="$OS (Cygwin)";;
-  *) OS="$OS ($osname)"
+case $(uname -s) in
+  Darwin)  [[ "x$OS" != *OSX?       ]] && OS="$OS (OSX)"            ;;
+  MINGW*)  [[ "x$OS" != *Bash?      ]] && OS="$OS (MinGW/Git Bash)" ;;
+  CYGWIN*) [[ "x$OS" != *Cygwin?    ]] && OS="$OS (Cygwin)"         ;;
+  *)       [[ "x$OS" != *$(osname)? ]] && OS="$OS ($osname)"        ;;
 esac
-unset osname
 export OS
 
 
