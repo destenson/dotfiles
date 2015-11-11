@@ -31,9 +31,7 @@ prepend-to-path() {
   fi
 }
 
-prepend-path() {
-  prepend-to-path PATH "$1"
-}
+alias prepend-path='prepend-to-path PATH'
 
 # Show 256 TERM colors
 colors() {
@@ -59,3 +57,28 @@ src() {
   fi
 }
 
+# String contains
+str-contains()
+{
+  if [ $# -gt 2 -a "x$3" == "x-v" ]; then
+    { echo "$1" | grep "$2" > /dev/null 2>&1; } && echo "$1 not contain $2" || echo "$1 does not contain $2"
+  else
+    echo "$1" | grep "$2" > /dev/null 2>&1
+  fi
+}
+
+ask-are-you-sure()
+{
+  read -r -p "Are you sure? [y/N] " response
+  case $response in
+    [yY][eE][sS]|[yY]) true ;;
+    [nN][nO]|[nN]|"")  false ;;
+    *)
+      echo -n "Seriously, Y or N... "
+      ask-are-you-sure
+      ;;
+  esac
+}
+
+
+# EOF

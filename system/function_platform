@@ -1,0 +1,41 @@
+# Platform finders
+
+is-linux() {
+  str-contains "$OS" "Linux" $*
+}
+is-mac(){
+  str-contains "$OS" "Darwin" $* || str-contains "$OS" "OSX" $*
+}
+is-git-bash(){
+  str-contains "$OS" "Git Bash" $*
+}
+is-mingw(){
+  str-contains "$OS" "MINGW" $*
+}
+is-cygwin(){
+  str-contains "$OS" "Cygwin" $*
+}
+is-win32(){
+  str-contains "$OS" "W32" $*
+}
+is-win64(){
+  str-contains "$OS" "W64" $*
+}
+is-windows(){
+  is-win64 $* || is-win32 $* || str-contains "$OS" "WIN" $*
+}
+is-windows-nt(){
+  is-windows $* && str-contains "$OS" "_NT" $*
+}
+
+alias is-linux='is-linux -v'
+alias is-mac='is-mac -v'
+alias is-git-bash='is-git-bash -v'
+alias is-mingw='is-mingw -v'
+alias is-cygwin='is-cygwin -v'
+alias is-win32='is-win32 -v'
+alias is-win64='is-win64 -v'
+alias is-windows='is-windows -v'
+alias is-windows-nt='is-windows-nt -v'
+
+

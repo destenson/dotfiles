@@ -1,0 +1,34 @@
+[user]
+	name = First Last
+	email = flast@email.com
+[credential]
+	helper = wincred
+[core]
+	autocrlf = input
+	# Which whitespace problems should git recognize: any whitespace at the end of a line, and mixed spaces and tabs
+	whitespace = trailing-space,space-before-tab
+[color]
+	# enable colors if possible
+	ui = auto
+[diff]
+	# Allow git diff to do basic rename and copy detection (see man page for details)
+	renames = copies
+	# Tell git diff to use mnemonic prefixes ([i]ndex, [w]ork tree, [c]ommit, [o]bject) instead of the standard a and b notation (see man page for details)
+	mnemonicprefix = true
+[branch]
+	# When branching off a remote branch, automatically let the local branch track the remote branch (see man page for details)
+	autosetupmerge = true
+[rerere]
+	# Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+	enabled = true
+[merge]
+	# Always show a diffstat at the end of a merge:
+	stat = true
+[push]
+	# When pushing without giving a refspec, push the current branch to its upstream branch. See the git config man page for more possible options.
+	default = tracking
+#[advice]
+#	# Disable the advice shown by Git when you attempt to push something that’s not fast forward-able
+#	pushNonFastForward = false
+#	# Disable "how to stage/unstage/add" hints given by git status
+#	statusHints = false
