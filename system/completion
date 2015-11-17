@@ -12,5 +12,3 @@ _dotfiles_completions() {
 
 complete -o default -F _dotfiles_completions dotfiles
 
-# Homebrew
-#is-executable brew && [ -f $(brew --prefix)/Library/Contributions/brew_bash_completion.sh ] && . `brew --prefix`/Library/Contributions/brew_bash_completion.sh
