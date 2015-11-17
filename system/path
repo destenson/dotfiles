@@ -28,6 +28,7 @@ if ! is-executable python; then
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   elif is-mac; then
+	echo "Running on Mac"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   else
