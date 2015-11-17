@@ -12,3 +12,4 @@ _dotfiles_completions() {
 
 complete -o default -F _dotfiles_completions dotfiles
 
+#EOF
