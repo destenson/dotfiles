@@ -11,7 +11,7 @@ srv() {
 # Get IP from hostname
 
 hostname2ip() {
-    ping -c 1 "$1" | egrep -m1 -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+    ping -4 -n 1 "$1" | egrep -m1 -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
 }
 
 # Upload file to transfer.sh
