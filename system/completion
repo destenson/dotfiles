@@ -3,8 +3,6 @@
 # Add tab completion for many Bash commands
 [ -f /etc/bash_completion ] && src /etc/bash_completion
 
-#is-executable brew && [ -f $(brew --prefix)/share/bash-completion/bash_completion ] && . $(brew --prefix)/share/bash-completion/bash_completion
-
 # Dotfiles
 
 _dotfiles_completions() {
