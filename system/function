@@ -9,6 +9,10 @@ get() {
     echo "${!1}"
 }
 
+is-true() {
+	eval "$*" && echo "true" || { echo false && false; }
+}
+
 # Executable
 is-executable() {
     local BIN=$((command -v "$1" || which "$1") 2>/dev/null)
