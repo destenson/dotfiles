@@ -1,5 +1,6 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+echo in $(current-src-path)
 . $(current-src-path)/../system/function
 
 if [ 0 -ne 0 ]; then
