@@ -16,10 +16,15 @@ hostname2ip() {
 
 # Upload file to transfer.sh
 # https://github.com/dutchcoders/transfer.sh/
-
-transfer() {
-    tmpfile=$( mktemp -t transferXXX )
-    curl --progress-bar --upload-file "$1" https://transfer.sh/$(basename $1) >> $tmpfile;
-    cat $tmpfile;
-    rm -f $tmpfile;
-}
+#
+## NOTE: This function is commented out because it should probably never be used by DFT.
+## It transfers the specified file(s) to a web server potentially in another country so
+## it definitely risks being considered an "export".
+#
+#transfer() {
+#	if [ $# == 0 ]; then echo "requires file to transfer" && return; fi
+#	if [ $# -gt 1 ]; then for arg in "$@"; do transfer "$var"; done; fi
+#    tmpfile=$(mktemp -t transferXXX)
+#    curl --progress-bar --upload-file "$1" https://transfer.sh/$(basename $1) >> $tmpfile && cat $tmpfile || echo fail
+#    rm -f $tmpfile;
+#}
