@@ -9,6 +9,8 @@ alias json="json -c"
 alias et="echo true"
 alias ef="{ echo false && false; }"
 
+alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
+
 # not sure what this is for... using hub instead of git (what's hub?)
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
