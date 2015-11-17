@@ -32,6 +32,7 @@ if ! is-executable python; then
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   else
+	echo "Running in unknown environment (OS=${OS})"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   fi
