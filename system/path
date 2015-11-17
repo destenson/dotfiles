@@ -21,22 +21,31 @@ prepend-path "${HOME}/.work/bin"
 # Add a path for python
 if ! is-executable python; then
   #echo python is not executable
-  if is-windows; then
-    is-git-bash && { [ -x /c/Python*/python.exe ] && prepend-path /c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }
-    is-cygwin && { [ -x /cygdrive/c/Python*/python.exe ] && prepend-path /cygdrive/c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }
-  elif is-linux; then
+  if [ is-linux > /dev/null ]; then
+	echo "Running on Linux"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   elif is-mac; then
 	echo "Running on Mac"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
+  elif is-windows; then
+	echo "Running on Windows"
+    if [ -f "${HOME}/AppData/Local/Programs/Python/*/python.exe" ]; then
+      prepend-path ${HOME}/AppData/Local/Programs/Python/$(ls -1 ~/AppData/Local/Programs/Python | tail -n 1)
+	fi
+    true
+    #is-git-bash && { [ -x /c/Python*/python.exe ] && prepend-path /c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }
+    #is-cygwin && { [ -x /cygdrive/c/Python*/python.exe ] && prepend-path /cygdrive/c/Python* || explorer https://www.python.org/downloads/release/python-278/ ; }
   else
 	echo "Running in unknown environment (OS=${OS})"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
   fi
 fi
+
+export PATH="/c/Users/deste_000/bin:/c/Users/deste_000/dotfiles/bin:/usr/bin:/bin:/mingw64/bin:/usr/local/bin:/c/Program Files (x86)/OpenSSH/bin:/c/Users/deste_000/AppData/Roaming/npm:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
 
 # Remove duplicates from PATH
 if is-executable awk; then

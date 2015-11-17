@@ -4,7 +4,20 @@
 verbose-file-entry() { echo "->$1$(basename $BASH_SOURCE)" && [ $# -gt 1 ] && echo "$*"; }
 verbose-file-exit()  { echo "<-$1$(basename $BASH_SOURCE)" && [ $# -gt 1 ] && echo "$*"; }
 
+quiet-file-entry() { true; }
+quiet-file-exit() { true; }
 
+SYSFUN=quiet
+#SYSFUN=verbose
+
+${SYSFUN}-file-entry "system/" '
+  system/function: provides
+    get VAR_NAME
+	is-true $bash_script_code
+	is-executable "$some_path"
+	is-supported $bash_script_code "$success_msg" "$failure_msg"
+	prepend-to-path PATH_VAR_NAME "$some_path"
+'
 
 # Get named var (usage: get "VAR_NAME")
 get() {
@@ -57,11 +70,12 @@ calc() {
 }
 
 # Code sourcer
+alias .='src'
 src() {
   if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
-    [ -f "$*" && -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
+    [ -f "$*" -a -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
   else
-    [ -f "$*" && -r "$*" ] && source "$*"
+    [ -f "$*" -a -r "$*" ] && source "$*"
   fi
 }
 
@@ -88,5 +102,7 @@ ask-are-you-sure()
   esac
 }
 
+
+${SYSFUN}-file-exit "system/"
 
 # EOF
