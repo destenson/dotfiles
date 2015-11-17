@@ -9,7 +9,8 @@ alias json="json -c"
 alias et="echo true"
 alias ef="{ echo false && false; }"
 
-is-executable hub && eval "$(hub alias -s)" # alias git=hub
+# not sure what this is for... using hub instead of git (what's hub?)
+#is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
 # Global aliases
 
