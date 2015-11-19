@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "not implemented" && exit 1
+
+
 [[ -x `command -v wget` ]] && CMD="wget --no-check-certificate -O -"
 [[ -x `command -v curl` ]] >/dev/null 2>&1 && CMD="curl -#L"
 
