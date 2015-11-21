@@ -61,8 +61,8 @@ export EXTRA_DIR
 #src "${HOME}/.bashrc"
 
 
-# source dotfiles from the system folder
-for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path,env,alias,completion,grep,prompt,custom}; do
+# source dotfiles from the system folder (alias must be first)
+for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,completion,grep,prompt,custom}; do
   #echo "sourcing $dotfile"
   [ -f "$dotfile" -a -r "$dotfile" ] && . "$dotfile"
 done
