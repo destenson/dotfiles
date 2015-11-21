@@ -64,7 +64,7 @@ export EXTRA_DIR
 # source dotfiles from the system folder
 for dotfile in "$DOTFILES_DIR"/system/{function,function_*,path,env,alias,completion,grep,prompt,custom}; do
   #echo "sourcing $dotfile"
-  [ -r "$dotfile" ] && source "$dotfile"
+  [ -f "$dotfile" -a -r "$dotfile" ] && . "$dotfile"
 done
 unset dotfile
 
