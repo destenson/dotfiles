@@ -1,5 +1,7 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+[ "x$BASH_SOURCE" == "" ] && return # we assume bash for now
+
 . $(dirname "$BASH_SOURCE")/function
 . $(dirname "$BASH_SOURCE")/../bash/path
 
