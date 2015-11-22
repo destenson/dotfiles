@@ -1,3 +1,5 @@
+#TODO: evaluate file
+#TODO: list any and all files this is dependent upon
 
 
 
@@ -51,9 +53,9 @@ calc() {
 # Code sourcer
 src() {
   if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
-    [ -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
+    [ -f "$*" && -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
   else
-    [ -r "$*" ] && source "$*"
+    [ -f "$*" && -r "$*" ] && source "$*"
   fi
 }
 

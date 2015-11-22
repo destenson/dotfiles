@@ -7,9 +7,12 @@ alias rr="rm -rf"
 alias json="json -c"
 
 alias et="echo true"
-alias ef="echo false"
+alias ef="{ echo false && false; }"
 
-is-executable hub && eval "$(hub alias -s)" # alias git=hub
+alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
+
+# not sure what this is for... using hub instead of git (what's hub?)
+#is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
 # Global aliases
 
@@ -73,6 +76,7 @@ alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
     alias "$method"="lwp-request -m '$method'"
 done
+unset method
 
 # Recursively remove Apple meta files
 
