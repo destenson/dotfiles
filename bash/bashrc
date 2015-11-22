@@ -18,13 +18,17 @@
 # The copy in your home directory (~/.bashrc) is yours, please
 # feel free to customise it to create a shell
 # environment to your liking.  If you feel a change
-# would be benifitial to all, please feel free to send
+# would be beneficial to all, please feel free to send
 # a patch to the cygwin mailing list.
 
 # User dependent .bashrc file
 
+#
 # If not running interactively, don't do anything
+#
 [[ "$-" != *i* ]] && return
+
+
 
 # Shell Options
 #
@@ -203,15 +207,15 @@ reload_bashrc()
 	. ~/.bashrc
 }
 
-DFT_runonce()
-{
-	git archive --remote=file:///home/git/repos/initial.git HEAD runme1st.sh;# | tar -x
-}
+#DFT_runonce()
+#{
+#	git archive --remote=file:///home/git/repos/initial.git HEAD runme1st.sh;# | tar -x
+#}
 
 replace_link()
 {
 	if [[ $# -eq 2 && -L $1 ]]; then
-		link=$1
+		local link=$1
 		rm $link
 		ln -s $2 $link
 	fi
