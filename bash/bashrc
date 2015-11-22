@@ -207,10 +207,10 @@ reload_bashrc()
 	. ~/.bashrc
 }
 
-DFT_runonce()
-{
-	git archive --remote=file:///home/git/repos/initial.git HEAD runme1st.sh;# | tar -x
-}
+#DFT_runonce()
+#{
+#	git archive --remote=file:///home/git/repos/initial.git HEAD runme1st.sh;# | tar -x
+#}
 
 replace_link()
 {
