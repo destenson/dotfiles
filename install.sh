@@ -17,7 +17,7 @@ grep "bash/_profile" ~/.bash_profile &> /dev/null || { echo; echo ". $DOTFILES_D
 
 ln -sfv "$DOTFILES_DIR/git/global.gitconfig" ~/.gitconfig
 #TODO: copy contents of files in gitignore project intelligently
-cp "$DOTFILES_DIR/git/.gitignore_global" ~/.gitignore
+cp "$DOTFILES_DIR/git/global.gitignore" ~/.gitignore
 if [ -d ~/gitignore/Global ]; then
   for ig in ~/gitignore/Global/*.gitignore ; do
 	cat $ig >> ~/.gitignore
