@@ -22,6 +22,7 @@ if [ -d ~/gitignore/Global ]; then
   for ig in ~/gitignore/Global/*.gitignore ; do
 	cat $ig >> ~/.gitignore
   done
+  unset ig
 fi
 
 echo "TODO: install repo"
