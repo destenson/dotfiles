@@ -54,7 +54,7 @@ echo "TODO: install python"
 #fi
 
 # Install extra stuff
-if [ -d "$EXTRA_DIR" -a -f "$EXTRA_DIR/install.sh" ]; then
+[ -d "$EXTRA_DIR" ] && if [[ -f "$EXTRA_DIR/install.sh" && -r "$EXTRA_DIR/install.sh" ]]; then
     . "$EXTRA_DIR/install.sh"
 fi
 
