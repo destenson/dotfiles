@@ -10,8 +10,6 @@ node_modules
 bower_components
 *.pyc
 .repopickle_*
-*.suo
-*.user
 
 # Windows image file caches
 Thumbs.db
@@ -37,6 +35,15 @@ $RECYCLE.BIN/
 */CVS/*
 .cvsignore
 */.cvsignore
+
+# Visual Studio files
+*.user
+*.suo
+packages
+bin
+obj
+Debug
+Release
 
 # Eclipse
 *.pydevproject
