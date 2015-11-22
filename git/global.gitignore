@@ -2,6 +2,7 @@
 *~
 *.bak
 
+# Misc files
 ._*
 .DS_Store
 .idea
