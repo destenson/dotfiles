@@ -3,7 +3,6 @@
 
 # Get current dir (so this script can run from anywhere)
 export DOTFILES_DIR EXTRA_DIR
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE}" )" && pwd )"
 EXTRA_DIR="$HOME/.extra"
 
