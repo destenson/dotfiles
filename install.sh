@@ -23,14 +23,15 @@ if [ -d $DOTFILES_DIR/../gitignore/Global ]; then
   done
 fi
 
+echo "TODO: install repo"
 # Install repo (always get the latest)
-if is-windows ; then
+#if is-windows ; then
   # Google's version of repo doesn't work with MINGW/MSYS (Git Bash on Windows)
-  curl https://raw.githubusercontent.com/esrlabs/git-repo/master/repo > ~/bin/repo && chmod a+x ~/bin/repo &&\
-  curl https://raw.githubusercontent.com/esrlabs/git-repo/master/repo.cmd > ~/bin/repo.cmd || exit 1
-else
-  curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo || exit 1
-fi
+  #curl https://raw.githubusercontent.com/esrlabs/git-repo/master/repo > ~/bin/repo && chmod a+x ~/bin/repo &&\
+  #curl https://raw.githubusercontent.com/esrlabs/git-repo/master/repo.cmd > ~/bin/repo.cmd || exit 1
+#else
+  #curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo || exit 1
+#fi
 
 # Install python
 if [ ! is-executable python ]; then
