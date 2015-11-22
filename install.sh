@@ -12,7 +12,7 @@ EXTRA_DIR="$HOME/.extra"
 . $DOTFILES_DIR/bash/_profile
 
 # Bunch of symlinks
-ln -sfv "$DOTFILES_DIR/bash/_profile" ~/.bash_profile
+grep "bash/_profile" ~/.bash_profile &> /dev/null || { echo; echo ". $DOTFILES_DIR/bash/_profile"; } >> ~/.bash_profile
 ln -sfv "$DOTFILES_DIR/git/.gitconfig" ~
 #ln -sfv "$DOTFILES_DIR/git/.gitignore_global" ~
 #TODO: copy contents of files in gitignore project intelligently
