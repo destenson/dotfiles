@@ -215,7 +215,7 @@ reload_bashrc()
 replace_link()
 {
 	if [[ $# -eq 2 && -L $1 ]]; then
-		link=$1
+		local link=$1
 		rm $link
 		ln -s $2 $link
 	fi
