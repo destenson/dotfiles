@@ -9,7 +9,7 @@ EXTRA_DIR="$HOME/.extra"
 # Update dotfiles itself first
 [ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
 
-source $DOTFILES_DIR/system/function
+. $DOTFILES_DIR/bash/function
 
 # Bunch of symlinks
 ln -sfv "$DOTFILES_DIR/bash/_profile" ~/.bash_profile
