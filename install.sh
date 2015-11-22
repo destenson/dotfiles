@@ -33,21 +33,23 @@ echo "TODO: install repo"
   #curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo || exit 1
 #fi
 
+echo "TODO: install python"
 # Install python
-if [ ! is-executable python ]; then
-  if [ is-git-bash && ! -x /c/Python*/python.exe ]; then
-    echo "Installing Python for Windows..."
-    if is-win32 ; then
-      curl https://www.python.org/ftp/python/2.7.8/python-2.7.8.msi > /tmp/python-2.7.8.msi &&\
-      chmod +x /tmp/python-2.7.8.msi && /tmp/python-2.7.8.msi && rm -f /tmp/python-2.7.8.msi ||\
-      { echo "failed to install Python for Windows"; exit 1; }
-    elif is-win64 ; then
-      curl https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi > /tmp/python-2.7.8.amd64.msi &&\
-      chmod +x /tmp/python-2.7.8.amd64.msi && /tmp/python-2.7.8.amd64.msi && rm -f /tmp/python-2.7.8.amd64.msi ||\
-      { echo "failed to install Python for Windows"; exit 1; }
-    fi
-  fi
-fi
+#if [ ! is-executable python ]; then
+  #echo "A Python interpreter cannot be found (repo requires it)"
+  #if [ is-git-bash && ! -x /c/Python*/python.exe ]; then
+    #echo "Installing Python for Windows..."
+    #if is-win32 ; then
+    #  curl https://www.python.org/ftp/python/2.7.8/python-2.7.8.msi > /tmp/python-2.7.8.msi &&\
+    #  chmod +x /tmp/python-2.7.8.msi && /tmp/python-2.7.8.msi && rm -f /tmp/python-2.7.8.msi ||\
+    #  { echo "failed to install Python for Windows"; exit 1; }
+    #elif is-win64 ; then
+    #  curl https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi > /tmp/python-2.7.8.amd64.msi &&\
+    #  chmod +x /tmp/python-2.7.8.amd64.msi && /tmp/python-2.7.8.amd64.msi && rm -f /tmp/python-2.7.8.amd64.msi ||\
+    #  { echo "failed to install Python for Windows"; exit 1; }
+    #fi
+  #fi
+#fi
 
 # Install extra stuff
 if [ -d "$EXTRA_DIR" -a -f "$EXTRA_DIR/install.sh" ]; then
