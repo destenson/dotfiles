@@ -7,6 +7,7 @@ verbose-file-exit()  { echo "<-$1$(basename $BASH_SOURCE)" && [ $# -gt 1 ] && ec
 quiet-file-entry() { true; }
 quiet-file-exit() { true; }
 
+# Change this to 
 SYSFUN=quiet
 #SYSFUN=verbose
 
@@ -101,7 +102,6 @@ ask-are-you-sure()
       ;;
   esac
 }
-
 
 ${SYSFUN}-file-exit "system/"
 
