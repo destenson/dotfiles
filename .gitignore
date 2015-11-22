@@ -1,0 +1,27 @@
+# Compiled Python files
+*.pyc
+
+# Compiled files
+*.o
+*.obj
+
+#
+*.suo
+*.user
+
+# Folder view configuration files
+Desktop.ini
+.DS_Store
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+#custom bash init scriptlet
+.bash*.user
+
+# TODO: add more to this file
