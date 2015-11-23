@@ -13,7 +13,8 @@ system/function_fs: provides
 	duf() # Show disk usage of current folder, or list with depth
 	extract() # Extract many types of compressed files
 	check_compression() # Check if resource is served compressed
-
+	gz() # Get gzipped file size
+	dataurl() # Create a data URL from a file
 '
 
 mk() { mkdir -p "$@" && cd "$@"; }
