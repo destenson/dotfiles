@@ -14,6 +14,15 @@ alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 # not sure what this is for... using hub instead of git (what's hub?)
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
+# helper function
+is-supported() {
+    if [ $# -eq 1 ]; then
+        eval "$1" > /dev/null 2>&1
+    else
+        eval "$1" > /dev/null 2>&1 && echo -n "$2" || echo -n "$3"
+    fi
+}
+
 # Global aliases
 
 if is-supported "alias -g"; then
