@@ -1,8 +1,8 @@
 #TODO: evaluate file
 #TODO: list any and all files this is dependent upon
 
-verbose-file-entry() { echo "->$1$(basename $BASH_SOURCE)" && [ $# -gt 1 ] && echo "$*"; }
-verbose-file-exit()  { echo "<-$1$(basename $BASH_SOURCE)" && [ $# -gt 1 ] && echo "$*"; }
+verbose-file-entry() { echo "->$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
+verbose-file-exit()  { echo "<-$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
 
 quiet-file-entry() { true; }
 quiet-file-exit() { true; }
