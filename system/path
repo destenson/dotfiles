@@ -1,5 +1,9 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+#[ "x$BASH_SOURCE" == "" ] && return # we assume bash for now
+#
+#. $(dirname "$BASH_SOURCE")/function
+#. $(dirname "$BASH_SOURCE")/../bash/path
 
 # Change one of the '0's to something else to "comment out" this whole file.
 if [ 0 -eq 0 ]; then
