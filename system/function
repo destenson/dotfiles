@@ -11,7 +11,8 @@ quiet-file-entry() { true; }
 quiet-file-exit() { true; }
 
 # Change this to 
-SYSFUN=quiet
+#SYSFUN=quiet
+SYSFUN=basic
 #SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "system/" '
