@@ -7,7 +7,7 @@ unset VERBOSE_SOURCING
 SYSFUN=quiet
 #SYSFUN=verbose
 
-${SYSFUN}-file-entry "system/" '
+${SYSFUN}-file-entry $BASH_SOURCE "system/" '
 system/function_fs: provides
 	mk()  { mkdir -p "$@" && cd "$@"; }
 	ff()  { find . -type f -iname "$1";}
@@ -98,6 +98,6 @@ cleanup() {
     is-executable rvm && rvm cleanup all
 }
 
-${SYSFUN}-file-entry "system/"
+${SYSFUN}-file-entry $BASH_SOURCE "system/"
 
 # EOF
