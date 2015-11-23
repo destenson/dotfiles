@@ -4,6 +4,9 @@
 verbose-file-entry() { echo "->$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
 verbose-file-exit()  { echo "<-$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
 
+basic-file-entry() { echo "->$2$(basename $1)"; }
+basic-file-exit()  { echo "<-$2$(basename $1)"; }
+
 quiet-file-entry() { true; }
 quiet-file-exit() { true; }
 
