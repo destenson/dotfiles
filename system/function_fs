@@ -1,9 +1,5 @@
 # Create a new directory and enter it
 
-VERBOSE_SOURCING=true
-. $(dirname "$BASH_SOURCE")/function
-unset VERBOSE_SOURCING
-
 SYSFUN=quiet
 #SYSFUN=verbose
 
