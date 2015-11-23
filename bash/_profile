@@ -29,7 +29,7 @@ case $(uname -s) in
   *)       [[ "x$OS" != *$(osname)? ]] && OS="$OS ($osname)"        ;;
 esac
 export OS
-
+echo "Detected OS = ${OS}"
 
 # Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
 READLINK=$((which greadlink || which readlink) 2> /dev/null)
@@ -45,7 +45,7 @@ else
 fi
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
-
+echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
 
 # Hook for extra/custom stuff
 EXTRA_DIR="$HOME/.extra"
