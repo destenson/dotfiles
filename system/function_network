@@ -1,6 +1,10 @@
+# Dependencies
+# ./function
+
 # Webserver
 
 srv() {
+	is-executable http-server || echo "Requires http-server" && return
     local PORT=${1:-80}
     if [ "$PORT" -le "1024" ]; then
 		is-executable sudo && sudo -v || echo "Requires sudo"
@@ -20,7 +24,7 @@ hostname2ip() {
 #
 ## NOTE: This function is commented out because it should probably never be used by DFT.
 ## It transfers the specified file(s) to a web server potentially in another country so
-## it definitely risks being considered an "export".
+## it definitely risks being causing an unintended "export".
 #
 #transfer() {
 #	if [ $# == 0 ]; then echo "requires file to transfer" && return; fi

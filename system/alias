@@ -1,18 +1,29 @@
 # Shortcuts
 
-alias _="sudo"
-alias g="git"
-alias v="vim"
-alias rr="rm -rf"
-alias json="json -c"
+#alias _="sudo"
+#alias g="git"
+#alias v="vim"
+#alias rr="rm -rf"
+#alias json="json -c"
 
-alias et="echo true"
-alias ef="{ echo false && false; }"
+# these are quite helpful for quickly debugging exit codes like this:
+# > some_cmd && et || ef
+alias et='echo true'
+alias ef='{ echo false && false; }'
 
 alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 
 # not sure what this is for... using hub instead of git (what's hub?)
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
+
+# helper function
+is-supported() {
+    if [ $# -eq 1 ]; then
+        eval "$1" > /dev/null 2>&1
+    else
+        eval "$1" > /dev/null 2>&1 && echo -n "$2" || echo -n "$3"
+    fi
+}
 
 # Global aliases
 
@@ -30,7 +41,7 @@ alias listfunctions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'" # show non 
 
 # ls
 
-LS_COLORS=`is-supported "ls --color" --color -G`
+LS_COLORS=`is-supported "ls --color" --color -G || is-supported "ls --color=auto" --color=auto -G`
 LS_TIMESTYLEISO=`is-supported "ls --time-style=long-iso" --time-style=long-iso`
 LS_GROUPDIRSFIRST=`is-supported "ls --group-directories-first" --group-directories-first`
 

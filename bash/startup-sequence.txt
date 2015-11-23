@@ -1,0 +1,63 @@
+
+
+
+According to Wikipedia, https://en.wikipedia.org/wiki/Bash_(Unix_shell) :
+
+
+
+Startup scripts
+When Bash starts, it executes the commands in a variety of dot files. Though similar to Bash shell script commands, which have execute permission enabled and an interpreter directive like #!/bin/bash, the initialization files used by Bash require neither.
+
+Execution order of startup files
+	When started as an interactive login shell
+		Bash reads and executes /etc/profile (if it exists). (Often this file calls /etc/bash.bashrc.)
+		After reading that file, it looks for ~/.bash_profile, ~/.bash_login, and ~/.profile in that order, and reads and executes the first one that exists and is readable.
+	When a login shell exits
+		Bash reads and executes ~/.bash_logout (if it exists).
+	When started as an interactive shell (but not a login shell)
+		Bash reads and executes ~/.bashrc (if it exists). This may be inhibited by using the --norc option. The --rcfile file option forces Bash to read and execute commands from file instead of ~/.bashrc.
+
+Comparison with the Bourne shell and csh startup sequences
+Elements of Bash were derived from the Bourne shell and csh, and allow limited startup file sharing with the Bourne shell and provide some startup features familiar to users of the csh.
+
+	Setting inheritable environment variables
+	The Bourne shell uses the ~/.profile at login to set environment variables that subprocesses then inherit. Bash can use the ~/.profile in a compatible way, by executing it explicitly from the Bash-specific ~/.bash_profile or ~/.bash_login with the line below. Bash-specific syntax can be kept out of the ~/.profile to keep the latter compatible with the Bourne shell.
+
+		. ~/.profile
+
+	Aliases and Functions
+	These two facilities, aliases from csh and the more general functions that largely supersede them from Bourne shell, were not typically inheritable from the login shell, and had to be redefined in each subshell spawned from the login shell. Although there is an ENV environment variable that could be applied to the problem, both csh and Bash support per-subshell startup files that address it directly. In Bash, the ~/.bashrc is called for interactive subshells. If user-defined functions from the ~/.bashrc are desired in the login shell as well, the ~/.bash_login can include the line below after any setting up of environment variables:
+
+		. ~/.bashrc
+		
+	Commands performed only at login and logout
+	The csh supports a ~/.login file for purposes of tasks performed only during initial login, such as displaying system load, disk status, whether email has come in, logging the login time, etc. The Bourne shell can emulate this in the ~/.profile, but doesn't predefine a file name. To achieve similar semantics to the csh model, the ~/.bash_profile can contain the line below, after the environment setup and function setup:
+
+		. ~/.bash_login
+
+	Likewise, the csh has a ~/.logout file run only when the login shell exits. The Bash equivalent is ~/.bash_logout, and requires no special setup. In the Bourne shell, the trap built-in can be used to achieve a similar effect.
+
+Legacy-compatible Bash startup example
+The skeleton ~/.bash_profile below is compatible with the Bourne shell and gives semantics similar to csh for the ~/.bashrc and ~/.bash_login. The [ -r filename ] are tests to see if the filename exists and is readable, simply skipping the part after the && if it's not.
+
+	[ -r ~/.profile ] && . ~/.profile             # set up environment, once, Bourne-sh syntax only.
+	if [ -n "$PS1" ] ; then                       # are we interactive?
+	   [ -r ~/.bashrc     ] && . ~/.bashrc        # tty/prompt/function setup for interactive shells.
+	   [ -r ~/.bash_login ] && . ~/.bash_login    # any at-login tasks for login shell only.
+	fi
+
+Operating system issues in Bash startup
+Some versions of Unix and Linux contain Bash system startup scripts, generally under the /etc directories. Bash calls these as part of its standard initialization, but other startup files can read them in a different order than the documented Bash startup sequence. The default content of the root user's files may also have issues, as well as the skeleton files the system provides to new user accounts upon setup. The startup scripts that launch the X window system may also do surprising things with the user's Bash startup scripts in an attempt to set up user-environment variables before launching the window manager. These issues can often be addressed using a ~/.xsession or ~/.xprofile file to read the ~/.profile — which provides the environment variables which Bash shell windows spawned from the window manager need, such as xterm or Gnome Terminal.
+
+
+
+
+
+
+
+
+
+
+
+
+

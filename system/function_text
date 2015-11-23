@@ -16,3 +16,12 @@ duplines() {
 uniqlines() {
     sort $1 | uniq -u
 }
+
+#
+#
+
+# this replaces the given text in the given file with nothing, removing it
+#remove_text_from_file() { sed -i "s/$2//g" "$1"; }
+
+# EOF
+
