@@ -2,7 +2,7 @@
 
 # Shortcuts
 alias _="sudo"
-alias g="git"
+#alias g="git"
 alias v="vim"
 alias rrm="rm -rf"
 #alias json="json -c"
@@ -52,7 +52,7 @@ alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
-alias g="git"
+#alias g="git"
 alias h="history"
 alias j="jobs"
 
