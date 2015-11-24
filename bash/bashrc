@@ -224,27 +224,6 @@ replace_link()
 #which g > /dev/null 2>&1 && alias g.orig=`which g`
 which gs > /dev/null 2>&1 && alias gs.orig=`which gs`
 
-alias g='git'
-alias gh='git help'
-alias gs='git status'
-alias gd='git diff'
-alias ga='git add'
-alias gb='git branch'
-alias gch='git checkout'
-alias gcm='git commit'
-
-alias ghelp='git help'
-alias gstat='git status'
-alias gdiff='git diff'
-alias gadd='git add'
-alias gbranch='git branch'
-alias gcheckout='git checkout'
-alias gcommit='git commit'
-alias gfetch='git fetch'
-alias gmerge='git merge'
-
-#TODO: alias gignore='git_ignore.sh'
-
 alias rbc='reload_bashrc'
 alias rl='replace_link'
 alias crp='create_project.sh'
