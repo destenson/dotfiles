@@ -25,22 +25,22 @@ ${SYSFUN}-file-entry $BASH_SOURCE "system/" "
 "
 
 # Get named var (usage: get "VAR_NAME")
-get() {
+function get() {
     echo "${!1}"
 }
 
-is-true() {
+function is-true() {
 	eval "$*" && echo "true" || { echo false && false; }
 }
 
 # Executable
-is-executable() {
+function is-executable() {
     local BIN=$((command -v "$1" || which "$1") 2>/dev/null)
     [[ ! $BIN == "" && -x $BIN ]]
 }
 
 # Add to path
-prepend-to-path() {
+function prepend-to-path() {
   local path_var="$1"								# the name of the PATH variable (such as "PATH")
   local to_add="$2"									# the directory to add the to given PATH variable
   if [ -d "$to_add" ]; then							# if directory to add exists
@@ -52,7 +52,7 @@ prepend-to-path() {
 alias prepend-path='prepend-to-path PATH'
 
 # Show 256 TERM colors
-colors() {
+function colors() {
   local X=$(tput op)
   local Y=$(printf %$((COLUMNS-6))s)
   for i in {0..256}; do
@@ -62,13 +62,13 @@ colors() {
 }
 
 # Calculator
-calc() {
+function calc() {
     echo "$*" | bc -l;
 }
 
 # Code sourcer
 alias .='src'
-src() {
+function src() {
   if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
     [ -f "$*" -a -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
   else
@@ -77,7 +77,7 @@ src() {
 }
 
 # String contains
-str-contains()
+function str-contains()
 {
   # if we were asked to be verbose with a -v argument 3rd
   [ $# -gt 2 ] && [ "x$3" == "x-v" ] && \
@@ -85,7 +85,7 @@ str-contains()
     { echo "$1" | grep "$2" > /dev/null 2>&1; }
 }
 
-ask-are-you-sure()
+function ask-are-you-sure()
 {
   read -r -p "Are you sure? [y/N] " response
   case $response in
