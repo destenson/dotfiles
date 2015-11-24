@@ -21,7 +21,7 @@ ${SYSFUN}-file-entry $BASH_SOURCE "system/" "
 	is-true [bash_script_code]
 	is-executable [path]
 	prepend-to-path [PATH_VAR_NAME] [path]
-	prepend-path \"prepend-to-path PATH\" \# huh?
+	prepend-path \"prepend-to-path PATH\" # huh?
 "
 
 # Get named var (usage: get "VAR_NAME")
