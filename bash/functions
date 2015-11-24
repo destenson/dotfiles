@@ -3,6 +3,8 @@
 # "commented out" by the following line and the last one in the file
 if [ 0 -ne 0 ]; then
 
+function get_shlvl() { echo SHLVL=$SHLVL; }
+
 # Simple calculator
 function calc() {
 	local result="";
