@@ -1,9 +1,9 @@
 # Platform finders
 
-is-linux(){
+is-linux() {
   str-contains "$OS" "Linux" $*
 }
-is-mac(){
+is-mac() {
   str-contains "$OS" "Darwin" $* || str-contains "$OS" "OSX" $*
 }
 is-git-bash(){

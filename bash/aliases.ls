@@ -14,5 +14,5 @@ alias ld="ls -ld $LS_COLORS */"
 unset LS_COLORS LS_TIMESTYLEISO LS_GROUPDIRSFIRST
 
 # Set LSCOLORS
-[ -f "$DOTFILES_DIR"/system/.dir_colors ] && eval "$(dircolors "$DOTFILES_DIR"/system/.dir_colors)"
+[ -f "$DOTFILES_DIR"/system/dir_colors ] && eval "$(dircolors "$DOTFILES_DIR"/system/dir_colors)"
 

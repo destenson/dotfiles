@@ -61,19 +61,28 @@ export EXTRA_DIR
 #. "${HOME}/.bashrc"
 
 
+return
 # source dotfiles from the system folder (alias must be first)
-for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,completion,grep,prompt,custom}; do
-  #echo "sourcing $dotfile"
-  [ -f "$dotfile" -a -r "$dotfile" ] && . "$dotfile"
+for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}; do
+  case "$dotfile" in 
+    *~)             ;;
+    *.bak)          ;;
+    *.txt)          ;;
+	*dir_colors) [ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors" ;;
+    *) [ -f "$dotfile" ] && [ -r "$dotfile" ] && . "$dotfile" ;;
+  esac
 done
 unset dotfile
 
-
 # source dotfiles from the bash folder
-for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,env,*}; do
-  if [ "x$dotfile" != "x_profile*" ]; then #TODO: change this to a case cuz this won't work as is
-    . "$dotfile"
-  fi
+for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*}; do
+  case "$dotfile" in 
+    *_profile)      ;;
+    *~)             ;;
+    *.bak)          ;;
+    *.txt)          ;;
+    *) . "$dotfile" ;;
+  esac
 done
 unset dotfile
 

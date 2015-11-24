@@ -12,8 +12,8 @@ quiet-file-exit() { true; }
 
 # Change this to 
 #SYSFUN=quiet
-SYSFUN=basic
-#SYSFUN=verbose
+#SYSFUN=basic
+SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "system/" '
   system/function: provides
@@ -79,11 +79,10 @@ src() {
 # String contains
 str-contains()
 {
-  if [ $# -gt 2 -a "x$3" == "x-v" ]; then
-    { echo "$1" | grep "$2" > /dev/null 2>&1; } && echo "$1 not contain $2" || echo "$1 does not contain $2"
-  else
-    echo "$1" | grep "$2" > /dev/null 2>&1
-  fi
+  # if we were asked to be verbose with a -v argument 3rd
+  [ $# -gt 2 ] && [ "x$3" == "x-v" ] && \
+    { { echo "$1" | grep "$2" > /dev/null 2>&1; } && echo "$1 not contain $2" || echo "$1 does not contain $2"; } || \
+    { echo "$1" | grep "$2" > /dev/null 2>&1; }
 }
 
 ask-are-you-sure()
