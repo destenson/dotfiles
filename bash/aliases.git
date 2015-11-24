@@ -1,6 +1,6 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
-if [ ! is-executable git ]; then echo "git was not found"; fi
+is-executable git || echo "git was not found"
 
 # git
 
@@ -13,6 +13,6 @@ alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
 
-
+alias git_fetch_all='git fetch --progress --prune origin'
 
 

@@ -1,6 +1,6 @@
 # Platform finders
 
-is-linux() {
+is-linux(){
   str-contains "$OS" "Linux" $*
 }
 is-mac(){
