@@ -61,13 +61,13 @@ export EXTRA_DIR
 #. "${HOME}/.bashrc"
 
 
-return
 # source dotfiles from the system folder (alias must be first)
 for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}; do
   case "$dotfile" in 
     *~)             ;;
     *.bak)          ;;
     *.txt)          ;;
+	*.sh)           ;;
 	*dir_colors)
 	  [ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || \
 	  ln -s "$dotfile" "$HOME/.dir_colors" ;;
@@ -83,6 +83,7 @@ for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*}; do
     *~)             ;;
     *.bak)          ;;
     *.txt)          ;;
+	*.sh)           ;;
 	*bash/global.*) ;;
     *) . "$dotfile" ;;
   esac
@@ -95,13 +96,19 @@ for dotfile in "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*}; do
     *~)             ;;
     *.bak)          ;;
     *.txt)          ;;
+	*.sh)           ;;
 	*git/global.*)  ;;
     *) . "$dotfile" ;;
   esac
 done
 unset dotfile
 
+
+
 return
+#incomplete
+
+
 
 # Load the shell dotfiles, and then some:
 # any file called ~/.bash*.user can be used to extend this file locally without being checked into git
