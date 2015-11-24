@@ -81,6 +81,19 @@ for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*}; do
     *~)             ;;
     *.bak)          ;;
     *.txt)          ;;
+	*bash/global.*) ;;
+    *) . "$dotfile" ;;
+  esac
+done
+unset dotfile
+
+# source dotfiles from the git folder
+for dotfile in "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*}; do
+  case "$dotfile" in 
+    *~)             ;;
+    *.bak)          ;;
+    *.txt)          ;;
+	*git/global.*)  ;;
     *) . "$dotfile" ;;
   esac
 done
