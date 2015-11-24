@@ -68,7 +68,9 @@ for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,comple
     *~)             ;;
     *.bak)          ;;
     *.txt)          ;;
-	*dir_colors) [ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors" ;;
+	*dir_colors)
+	  [ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || \
+	  ln -s "$dotfile" "$HOME/.dir_colors" ;;
     *) [ -f "$dotfile" ] && [ -r "$dotfile" ] && . "$dotfile" ;;
   esac
 done
