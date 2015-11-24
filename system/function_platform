@@ -1,30 +1,30 @@
 # Platform finders
 
-is-linux() {
+function is-linux() {
   str-contains "$OS" "Linux" $*
 }
-is-mac() {
+function is-mac() {
   str-contains "$OS" "Darwin" $* || str-contains "$OS" "OSX" $*
 }
-is-git-bash(){
+function is-git-bash(){
   str-contains "$OS" "Git Bash" $*
 }
-is-mingw(){
+function is-mingw(){
   str-contains "$OS" "MINGW" $*
 }
-is-cygwin(){
+function is-cygwin(){
   str-contains "$OS" "Cygwin" $*
 }
-is-win32(){
+function is-win32(){
   str-contains "$OS" "W32" $*
 }
-is-win64(){
+function is-win64(){
   str-contains "$OS" "W64" $*
 }
-is-windows(){
+function is-windows(){
   is-win64 $* || is-win32 $* || str-contains "$OS" "WIN" $*
 }
-is-windows-nt(){
+function is-windows-nt(){
   is-windows $* && str-contains "$OS" "_NT" $*
 }
 
