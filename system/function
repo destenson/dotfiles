@@ -15,14 +15,14 @@ quiet-file-exit() { true; }
 #SYSFUN=basic
 SYSFUN=verbose
 
-${SYSFUN}-file-entry $BASH_SOURCE "system/" '
+${SYSFUN}-file-entry $BASH_SOURCE "system/" "
   system/function: provides
-    get VAR_NAME
-	is-true $bash_script_code
-	is-executable "$some_path"
-	prepend-to-path PATH_VAR_NAME "$some_path"
-	prepend-path "prepend-to-path PATH"
-'
+    get [VAR_NAME]
+	is-true [bash_script_code]
+	is-executable [path]
+	prepend-to-path [PATH_VAR_NAME] [path]
+	prepend-path \"prepend-to-path PATH\" \# huh?
+"
 
 # Get named var (usage: get "VAR_NAME")
 get() {
