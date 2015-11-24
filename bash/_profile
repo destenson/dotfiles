@@ -50,7 +50,7 @@ echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
 # Hook for extra/custom stuff
 EXTRA_DIR="$HOME/.extra"
 if [ -d "$EXTRA_DIR" ]; then
-  for EXTRAFILE in "$EXTRA_DIR"/bin/*.{sh,[iI],inc}; do
+  for EXTRAFILE in $(echo "$EXTRA_DIR"/bin/*.{sh,[iI],inc} | uniq); do
     . "$EXTRAFILE"
   done
   unset EXTRAFILE
@@ -62,7 +62,7 @@ export EXTRA_DIR
 
 
 # source dotfiles from the system folder (alias must be first)
-for dotfile in "$DOTFILES_DIR"/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}; do
+for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}" | uniq); do
   case "$dotfile" in 
     *~)             ;;
     *.bak)          ;;
@@ -77,7 +77,7 @@ done
 unset dotfile
 
 # source dotfiles from the bash folder
-for dotfile in "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*}; do
+for dotfile in $(echo "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*} | uniq); do
   case "$dotfile" in 
     *_profile)      ;;
     *~)             ;;
@@ -91,7 +91,7 @@ done
 unset dotfile
 
 # source dotfiles from the git folder
-for dotfile in "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*}; do
+for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq); do
   case "$dotfile" in 
     *~)             ;;
     *.bak)          ;;
