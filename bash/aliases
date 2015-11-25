@@ -1,10 +1,10 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
 # Shortcuts
-alias _="sudo"
+#alias _="sudo"
 #alias g="git"
-alias v="vim"
-alias rrm="rm -rf"
+#alias v="vim"
+#alias rrm="rm -rf"
 #alias json="json -c"
 
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
