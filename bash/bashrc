@@ -222,7 +222,7 @@ replace_link()
 }
 
 #which g > /dev/null 2>&1 && alias g.orig=`which g`
-which gs > /dev/null 2>&1 && alias gs.orig=`which gs`
+#which gs > /dev/null 2>&1 && alias gs.orig=`which gs`
 
 #alias rbc='reload_bashrc'
 #alias rl='replace_link'
@@ -230,8 +230,8 @@ which gs > /dev/null 2>&1 && alias gs.orig=`which gs`
 #alias cdiff='colordiff'
 
 # if ~/bin is not in $PATH, then add it (needed on cygwin apparently)
-echo "$PATH" | grep "$HOME/bin" > /dev/null || export PATH=$HOME/bin:$PATH
-echo "$PATH" | grep "$HOME/DFT/bin" > /dev/null || export PATH=$HOME/DFT/bin:$PATH
+#echo "$PATH" | grep "$HOME/bin" > /dev/null || export PATH=$HOME/bin:$PATH
+#echo "$PATH" | grep "$HOME/DFT/bin" > /dev/null || export PATH=$HOME/DFT/bin:$PATH
 
 
 
