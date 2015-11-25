@@ -17,7 +17,7 @@ alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
 # helper function
-is-supported() {
+function is-supported() {
     if [ $# -eq 1 ]; then
         eval "$1" > /dev/null 2>&1
     else
