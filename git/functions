@@ -8,6 +8,7 @@ diff() {
 
 git_fetch()
 {
+	git fetch
 }
 
 
