@@ -1,9 +1,8 @@
 ## Prompt (TODO: review)
 
-if echo $OS | grep "Git Bash" > /dev/null; then
+if is-git-bash; then
 # Git Bash already configures the prompt, so skip this file
-	#echo "In Git Bash: skipping prompt config file"
-	true
+	echo "In Git Bash: skipping prompt config file"
 else
 
 _bash_prompt_config() {
