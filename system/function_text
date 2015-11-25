@@ -24,4 +24,3 @@ uniqlines() {
 #remove_text_from_file() { sed -i "s/$2//g" "$1"; }
 
 # EOF
-
