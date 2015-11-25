@@ -171,3 +171,5 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias reload="exec $SHELL -l"
 
 fi # if [ 0 -ne 0 ]; then
+
+# EOF
