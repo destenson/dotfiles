@@ -96,6 +96,6 @@ cleanup() {
     is-executable rvm && rvm cleanup all
 }
 
-${SYSFUN}-file-entry $BASH_SOURCE "system/"
+${SYSFUN}-file-exit $BASH_SOURCE "system/"
 
 # EOF
