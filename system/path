@@ -41,8 +41,6 @@ if ! is-executable python; then
   fi
 fi
 
-export PATH="/c/Users/deste_000/bin:/c/Users/deste_000/dotfiles/bin:/usr/bin:/bin:/mingw64/bin:/usr/local/bin:/c/Program Files (x86)/OpenSSH/bin:/c/Users/deste_000/AppData/Roaming/npm:/usr/bin/vendor_perl:/usr/bin/core_perl"
-
 
 # Remove duplicates from PATH
 if is-executable awk; then
