@@ -58,3 +58,4 @@ def_alias 'g flow'     'gfl' 'gflow'     'git_flow'
 alias git_fetch_all='git fetch --progress --prune origin'
 
 
+# EOF
