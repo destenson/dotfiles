@@ -13,7 +13,7 @@
 
 # Common .bash_profile file
 
-# if not running an interactive shell, don't do any of this
+# if not running an interactive shell, return
 [ -z "$PS1" ] && return
 
 DEBUG=true
