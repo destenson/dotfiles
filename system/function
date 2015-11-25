@@ -1,15 +1,6 @@
 #TODO: evaluate file
 #TODO: list any and all files this is dependent upon
 
-verbose-file-entry() { echo "->$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
-verbose-file-exit()  { echo "<-$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
-
-basic-file-entry() { echo "->$2$(basename $1)"; }
-basic-file-exit()  { echo "<-$2$(basename $1)"; }
-
-quiet-file-entry() { true; }
-quiet-file-exit() { true; }
-
 # Change this to 
 #SYSFUN=quiet
 #SYSFUN=basic
