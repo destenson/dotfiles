@@ -3,7 +3,7 @@
 
 # Use Git’s colored diff
 diff() {
-	git diff --no-index --color-words "$@";
+	git diff --no-index --color-words "$@"
 }
 
 git_fetch()
