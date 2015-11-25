@@ -239,3 +239,5 @@ replace_link()
 #alias lld='ll | egrep ^d'
 
 # EOF
+
+#alias lld='ll | egrep ^d'
