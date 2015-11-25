@@ -23,10 +23,10 @@ VERBOSE_SOURCING=$DEBUG
 
 # Update the OS variable
 case $(uname -s) in
-  Darwin)  [[ "x$OS" != *OSX?       ]] && OS="$OS (OSX)"            ;;
-  MINGW*)  [[ "x$OS" != *Bash?      ]] && OS="$OS (MinGW/Git Bash)" ;;
-  CYGWIN*) [[ "x$OS" != *Cygwin?    ]] && OS="$OS (Cygwin)"         ;;
-  *)       [[ "x$OS" != *$(osname)? ]] && OS="$OS ($osname)"        ;;
+  Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
+  MINGW*)  [ "$OS" != "*Bash?"      ] && OS="$OS (MinGW/Git Bash)" ;;
+  CYGWIN*) [ "$OS" != "*Cygwin?"    ] && OS="$OS (Cygwin)"         ;;
+  *)       [ "$OS" != "*$(osname)?" ] && OS="$OS ($osname)"        ;;
 esac
 export OS
 echo "Detected OS = ${OS}"
