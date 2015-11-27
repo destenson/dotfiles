@@ -56,15 +56,15 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
 echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
 
-# Hook for extra/custom stuff
-EXTRA_DIR="$HOME/.extra"
-if [ -d "$EXTRA_DIR" ]; then
-  for EXTRAFILE in $(echo "$EXTRA_DIR"/bin/*.{sh,[iI],inc} | uniq); do
-    . "$EXTRAFILE"
-  done
-  unset EXTRAFILE
-fi
-export EXTRA_DIR
+## Hook for extra/custom stuff
+#EXTRA_DIR="$HOME/.extra"
+#if [ -d "$EXTRA_DIR" ]; then
+#  for EXTRAFILE in $(echo "$EXTRA_DIR"/bin/*.{sh,[iI],inc} | uniq); do
+#    . "$EXTRAFILE"
+#  done
+#  unset EXTRAFILE
+#fi
+#export EXTRA_DIR
 
 ## source the users bashrc if it exists
 #. "${HOME}/.bashrc"
