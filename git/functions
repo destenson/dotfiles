@@ -6,11 +6,6 @@ diff() {
 	git diff --no-index --color-words "$@"
 }
 
-git_fetch()
-{
-	git fetch
-}
-
 
 
 
