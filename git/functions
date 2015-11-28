@@ -36,7 +36,7 @@ function create_bare_repository()
 			-d|--directory) shift; location="$1" ; [ -z $DEBUG ] || echo "directory=$location" ;;
 			-m|--description) shift; description="$1" ; [ -z $DEBUG ] || echo "description=$description" ;;
 			-h|--help) echo "Usage:
-create_bare_repository <-h|--help> <-v|--verbose> <-d|--directory> [path]" ;;
+create_bare_repository [-h | --help] [-v | --verbose] [-d | --directory] [path]" ;;
 			*)
 				[ -z "$location" ] || { echo "location has already been set, aborting" && return 1; }
 				[ -z $DEBUG ] || echo "location=$key"; location="$key" ;;
