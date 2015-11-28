@@ -6,7 +6,65 @@ diff() {
 	git diff --no-index --color-words "$@"
 }
 
+function is_a_gitdir()
+{
+	[ $# -ne 1 ] && errecho "Usage: is_a_gitdir [dir]" && return 1
+	[ -d $1 ] || { errecho "Usage: is_a_gitdir [dir]" && errecho "dir must be a directory" && return 1; }
+	(
+	pushd $1 &> /dev/null
+	# if it contains the following 7 files and directories, then we consider it a "GIT_DIR" like a .git directory or a bare repository
+	[ -f config ] && [ -f description ] && [ -f HEAD ] &&\
+	[ -d hooks ] && [ -d info ] && [ -d objects ] && [ -d refs ]
+	rv=$?
+	popd &> /dev/null
+	return $rv
+	) #&> /dev/null
+	return $?
+}
 
+function create_bare_repository()
+{
+	local DEBUG=true
+	# TODO: If there is an argument -m "description" write that to the description file after creating the repository
+	local location=
+	local verbose=
+	local description=
+	while [[ $# > 0 ]]; do
+		local key="$1"
+		case $key in
+			-v|--verbose) [ -z $DEBUG ] || echo "verbose=true"; verbose=true ;;
+			-d|--directory) shift; location="$1" ; [ -z $DEBUG ] || echo "directory=$location" ;;
+			-m|--description) shift; description="$1" ; [ -z $DEBUG ] || echo "description=$description" ;;
+			-h|--help) echo "Usage:
+create_bare_repository [-h | --help] [-v | --verbose] [-d | --directory] [path]" ;;
+			*)
+				[ -z "$location" ] || { echo "location has already been set, aborting" && return 1; }
+				[ -z $DEBUG ] || echo "location=$key"; location="$key" ;;
+		esac
+		shift
+	done
+	
+	[ -z "$location" ] && epf "Must specify a single location for the repo\n" && return 1
+
+	[ -e "$location" ] && ! is_a_subdir "$PWD" "$location" && epf "Given location must be a subdirectory" && return 1
+	
+	# REPLACE_REPO is defined, so delete it if it exists
+	[ -z "$REPLACE_REPO" ] || { [ -d $location ] && { \
+		is_a_subdir $PWD $location && \
+		is_a_gitdir $location && rm -rf $location || \
+		epf "Given location ($location) is not a repo or couldn't be deleted.\n"; }; }
+		
+	[ -e "$location" ] && epf "Given location ($location) already exists.\nSet REPLACE_REPO=true to override." && return 1;
+
+	mkdir -p $location
+	pushd $location &> /dev/null
+	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet
+	git init --bare --shared $QUIET_ARG
+	local result=$?	
+	[ -z "$description" ] || echo "$description" > description
+	popd &> /dev/null
+	return $result
+}
 
 
 
