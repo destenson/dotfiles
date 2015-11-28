@@ -27,7 +27,7 @@ function create_bare_repository()
 	# TODO: If there is an argument -m "description" write that to the description file after creating the repository
 	local location=
 	local verbose=
-	while [[ $# > 1 ]]; do
+	while [[ $# > 0 ]]; do
 		local key="$1"
 		case $key in
 			-v|--verbose) verbose=true ;;
