@@ -55,6 +55,7 @@ while [ "$1" ]; do
 		;;
 	-t|--no-time)
 		NOTIME=true
+		shift
 		;;
 	*)
 		break
