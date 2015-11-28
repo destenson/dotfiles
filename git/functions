@@ -25,10 +25,21 @@ function is_a_gitdir()
 function create_bare_repository()
 {
 	# TODO: If there is an argument -m "description" write that to the description file after creating the repository
-	[ $# -ne 1 ] && epf "Must specify a single location for the repo\n" && return 1
+	local location=
+	local verbose=
+	while [[ $# > 1 ]]; do
+		local key="$1"
+		case $key in
+			-v|--verbose) verbose=true ;;
+			*)	location=$key ;;
+		esac
+		shift
+	done
+	
+	[ -z $location ] && epf "Must specify a single location for the repo\n" && return 1
 
 	local location=$1
-	local QUIET_ARG= #--quiet
+	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet
 	
 	[ -e $location ] && ! $(is_a_subdir $PWD $location &> /dev/null) && epf "Given location must be a subdirectory" && return 1
 	
@@ -39,7 +50,7 @@ function create_bare_repository()
 		epf "Given location ($location) is not a repo or couldn't be deleted.\n"; }; }
 		
 	[ -e $location ] && epf "Given location ($location) already exists.\nSet REPLACE_REPO=true to override." && return 1;
-	
+
 	mkdir -p $location
 	pushd $location &> /dev/null
 	git init --bare --shared $QUIET_ARG
