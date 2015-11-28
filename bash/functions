@@ -1,5 +1,27 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+function is_samedir()
+{
+	[ $# -ne 2 ] && { echo "Usage: is_samedir [dir A] [dir B]" && return 1; }  > /dev/stderr
+	[[ $(cd $2; pwd) = $(cd $1; pwd) ]]
+}
+
+function is_a_subdir()
+{
+	#local DEBUG=true
+	if [ $# -eq 1 ]; then
+		local d1=$(pwd)
+		local d2=$([ -d $1 ] && cd $1 && pwd)
+	else
+		[ $# -ne 2 ] && echo "Usage: is_a_subdir [dir] [potential_subdir]" && return 1
+		local d1=$([ -d $1 ] && cd $1 && pwd)
+		local d2=$([ -d $2 ] && cd $2 && pwd)
+	fi
+	[ -z $DEBUG ] || { echo "d1=$d1"; echo "d2=$d2"; }
+	[ -z $d1 ] || [ -z $d2 ] && return 1
+	[[ $d2 = ${d1}* ]]
+}
+
 # "commented out" by the following line and the last one in the file
 if [ 0 -ne 0 ]; then
 
