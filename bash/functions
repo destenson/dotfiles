@@ -13,6 +13,7 @@ function is_a_subdir()
 	local d1=$(cd $1 && pwd)
 	local d2=$(cd $2 && pwd)
 	[ -z $DEBUG ] || { echo "d1=$d1"; echo "d2=$d2"; }
+	[ -z $d1 ] || [ -z $d2 ] && return 1
 	[[ $d2 = ${d1}* ]]
 }
 
