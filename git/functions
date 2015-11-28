@@ -37,7 +37,9 @@ function create_bare_repository()
 			-m|--description) shift; description="$1" ; [ -z $DEBUG ] || echo "description=$description" ;;
 			-h|--help) echo "Usage:
 create_bare_repository <-h|--help> <-v|--verbose> <-d|--directory> [path]" ;;
-			*) [ -z $DEBUG ] || echo "location=$key"; location="$key" ;;
+			*)
+				[ -z "$location" ] || { echo "location has already been set, aborting" && return 1; }
+				[ -z $DEBUG ] || echo "location=$key"; location="$key" ;;
 		esac
 		shift
 	done
