@@ -24,9 +24,10 @@ progname=$(basename $0)
 
 function addtime ()
 {
-	while read line; do
-		echo "`date ${FMT}` $1: $line"
-	done
+	#local NOTIME=${NOTIME:-true}
+	[ -z "$NOTIME" ] && \
+	while read line; do echo "`date ${FMT}` $1: $line"; done || \
+	while read line; do echo "$1: $line"; done
 }
 
 function usage ()
@@ -36,8 +37,9 @@ function usage ()
   Run program and annotate STDOUT/STDERR with a timestamp.
 
   Options:
-   +FORMAT    - Controls the timestamp format as per date(1)
-   -h, --help - Show this message"
+   +FORMAT       - Controls the timestamp format as per date(1)
+   -t, --no-time - Suppresses the timestamp altogether
+   -h, --help    - Show this message"
 }
 
 FMT="+%H:%M:%S"
@@ -50,6 +52,9 @@ while [ "$1" ]; do
 	-h|-help|--help)
 		usage
 		exit 0
+		;;
+	-t|--no-time)
+		NOTIME=true
 		;;
 	*)
 		break
