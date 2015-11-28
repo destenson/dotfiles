@@ -22,14 +22,14 @@
 
 progname=$(basename $0)
 
-addtime ()
+function addtime ()
 {
 	while read line; do
 		echo "`date ${FMT}` $1: $line"
 	done
 }
 
-usage ()
+function usage ()
 {
 	echo \
 "Usage: $progname [options] program [args ...]
