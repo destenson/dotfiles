@@ -6,7 +6,21 @@ diff() {
 	git diff --no-index --color-words "$@"
 }
 
-
+function is_a_gitdir()
+{
+	[ $# -ne 1 ] && errecho "Usage: is_a_gitdir [dir]" && return 1
+	[ -d $1 ] || { errecho "Usage: is_a_gitdir [dir]" && errecho "dir must be a directory" && return 1; }
+	(
+	pushd $1 &> /dev/null
+	# if it contains the following 7 files and directories, then we consider it a "GIT_DIR" like a .git directory or a bare repository
+	[ -f config ] && [ -f description ] && [ -f HEAD ] &&\
+	[ -d hooks ] && [ -d info ] && [ -d objects ] && [ -d refs ]
+	rv=$?
+	popd &> /dev/null
+	return $rv
+	) #&> /dev/null
+	return $?
+}
 
 
 
