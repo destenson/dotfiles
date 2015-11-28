@@ -31,7 +31,10 @@ function create_bare_repository()
 		local key="$1"
 		case $key in
 			-v|--verbose) verbose=true ;;
-			*)	location=$key ;;
+			-d|--directory) shift; location="$1" ;;
+			-h|--help) echo "Usage:
+create_bare_repository <-h|--help> <-v|--verbose> <-d|--directory> [path]" ;;
+			*)	location="$key" ;;
 		esac
 		shift
 	done
