@@ -39,7 +39,6 @@ function create_bare_repository()
 	[ -z $location ] && epf "Must specify a single location for the repo\n" && return 1
 
 	local location=$1
-	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet
 	
 	[ -e $location ] && ! $(is_a_subdir $PWD $location &> /dev/null) && epf "Given location must be a subdirectory" && return 1
 	
@@ -53,6 +52,7 @@ function create_bare_repository()
 
 	mkdir -p $location
 	pushd $location &> /dev/null
+	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet
 	git init --bare --shared $QUIET_ARG
 	local result=$?	
 	popd &> /dev/null
