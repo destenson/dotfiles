@@ -38,8 +38,6 @@ function create_bare_repository()
 	
 	[ -z $location ] && epf "Must specify a single location for the repo\n" && return 1
 
-	local location=$1
-	
 	[ -e $location ] && ! $(is_a_subdir $PWD $location &> /dev/null) && epf "Given location must be a subdirectory" && return 1
 	
 	# REPLACE_REPO is defined, so delete it if it exists
