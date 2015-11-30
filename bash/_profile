@@ -16,10 +16,10 @@
 # if not running an interactive shell, return
 [ -z "$PS1" ] && return
 
-DEBUG=true
+[ -z $DEBUG_DOTFILES ] || echo Debugging dotfiles
 
 # Comment out the following to silence the statement printed each time a file is sourced
-VERBOSE_SOURCING=$DEBUG
+VERBOSE_SOURCING=basic
 
 verbose-file-entry() { echo "->$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
 verbose-file-exit()  { echo "<-$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
