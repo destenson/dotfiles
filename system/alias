@@ -25,6 +25,9 @@ alias is-win32='is-win32 -v'
 alias is-win64='is-win64 -v'
 alias is-windows='is-windows -v'
 alias is-windows-nt='is-windows-nt -v'
+alias .='src'
+alias prepend-path='prepend-to-path PATH'
+
 
 
 # not sure what this is for... using hub instead of git (what's hub?)
