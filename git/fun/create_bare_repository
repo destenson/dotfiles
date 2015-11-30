@@ -3,7 +3,7 @@
 function create_bare_repository()
 {
 	local DEBUG=true
-	function epf() { printf "#@" >> /dev/stderr; }
+	function epf() { printf "$@" >> /dev/stderr; }
 	_create_bare_repository "$@"
 	local result=$?
 	unset epf

@@ -3,16 +3,17 @@
 
 # Change this to 
 #SYSFUN=quiet
-#SYSFUN=basic
-SYSFUN=verbose
+SYSFUN=basic
+#SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "bash/" "
-  bash/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
+  bash/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$' | xargs | sed 's/\n//g')"
+unset fns
 
 # Useful bash functions are defined each in their own file under ./fun/
 #for f in *; do expr $f : "^[A-Z]*$" > /dev/null || echo $f;  done
 
-pushd fun
+pushd fun &> /dev/null
 for funfile in *; do
   # skips all files named with all caps so README's are not included :)
   [[ $funfile =~ ^[A-Z]*$ ]] || \
@@ -22,15 +23,18 @@ for funfile in *; do
     *.txt)	;;
 	*.sh)	;;
     *)
-	  [[ -f "$funfile" && -r "$funfile" ]] && echo "Attempting to source $funfile" && . "$funfile" ;;
+		[[ -f "$funfile" && -r "$funfile" ]] && {
+			[[ $SYSFUN = quiet ]] || echo "Attempting to source $funfile";
+		} && . "$funfile" ;;
   esac
 done
-popd
+popd &> /dev/null
 unset f funfile
 
 
 # "commented out" by the following line and the last one in the file
 if [ 0 -ne 0 ]; then
+true
 ## Syntax-highlight JSON strings or files
 ## Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
 #function json() {
