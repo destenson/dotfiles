@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+function is-win64(){
+  str-contains "$OS" "W64" $*
+}
+
+# EOF is-win64

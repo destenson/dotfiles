@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+function is-windows(){
+  is-win64 $* || is-win32 $* || str-contains "$OS" "WIN" $*
+}
+
+# EOF is-windows

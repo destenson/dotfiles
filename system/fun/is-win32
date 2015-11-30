@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+function is-win32(){
+  str-contains "$OS" "W32" $*
+}
+
+# EOF is-win32

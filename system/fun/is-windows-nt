@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+function is-windows-nt(){
+  is-windows $* && str-contains "$OS" "_NT" $*
+}
+
+# EOF is-windows-nt
