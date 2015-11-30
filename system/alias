@@ -7,7 +7,7 @@
 #alias json="json -c"
 
 # these are quite helpful for quickly debugging exit codes like this:
-# > some_cmd && et || ef
+# $ some_cmd && et || ef
 alias et='echo true'
 alias ef='{ echo false && false; }'
 alias dbg_et='{ [ -z $DEBUG ] || echo true; true; }'
