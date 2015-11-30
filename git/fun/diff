@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+# Use Git's colored diff
+function diff()
+{
+	git diff --no-index --color-words "$@"
+}
+
+# EOF diff

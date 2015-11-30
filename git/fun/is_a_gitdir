@@ -1,0 +1,22 @@
+#!/bin/env bash
+
+function is_a_gitdir()
+{
+	[ $# -ne 1 ] && { echo "Usage: is_a_gitdir [dir]" && return 1; } >> /dev/stderr
+	[ -d $1 ] || { echo "Usage: is_a_gitdir [dir]" && echo "dir must be a directory" && return 1; } >> /dev/stderr
+	(
+	define_quiet_ppd # make pushd & popd silent if not DEBUG'ing, but we must call undefine_quiet_ppd before the function returns
+	pushd $1
+
+	# if it contains the following 7 files and directories, then we consider it a "GIT_DIR" like a .git directory or a bare repository
+	[ -f config ] && [ -f description ] && [ -f HEAD ] &&\
+	[ -d hooks ] && [ -d info ] && [ -d objects ] && [ -d refs ]
+	rv=$?
+
+	popd
+	undefine_quiet_ppd
+	return $rv
+	)
+}
+
+# EOF is_a_gitdir

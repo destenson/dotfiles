@@ -1,0 +1,61 @@
+#!/bin/env bash
+
+function create_bare_repository()
+{
+	local DEBUG=true
+	function epf() { printf "#@" >> /dev/stderr; }
+	_create_bare_repository "$@"
+	local result=$?
+	unset epf
+	return $?
+}
+
+function _create_bare_repository()
+{
+	# TODO: If there is an argument -m "description" write that to the description file after creating the repository
+	local location=
+	local verbose=
+	local description=
+	while [[ $# > 0 ]]; do
+		local key="$1"
+		case $key in
+			-v|--verbose) [ -z $DEBUG ] || echo "verbose=true"; verbose=true ;;
+			-d|--directory) shift; location="$1" ; [ -z $DEBUG ] || echo "directory=$location" ;;
+			-m|--description) shift; description="$1" ; [ -z $DEBUG ] || echo "description=$description" ;;
+			-h|--help) echo "Usage:
+create_bare_repository [-h | --help] [-v | --verbose] [-d | --directory] [path]"; return 1 ;;
+			*)
+				[ -z "$location" ] || { echo "location has already been set, aborting" && return 1; }
+				[ -z $DEBUG ] || echo "location=$key"; location="$key" ;;
+		esac
+		shift
+	done
+	
+	[ -z "$location" ] && epf "Must specify a single location for the repo\n" && return 1
+
+	[ -e "$location" ] && ! is_a_subdir "$PWD" "$location" && epf "Given location must be a subdirectory" && return 1
+	
+	# REPLACE_REPO is defined, so delete it if it exists
+	[ -z "$REPLACE_REPO" ] || { [ -d $location ] && { \
+		is_a_subdir $PWD $location && \
+		is_a_gitdir $location && rm -rf $location || \
+		epf "Given location ($location) is not a repo or couldn't be deleted.\n"; }; }
+		
+	[ -e "$location" ] && epf "Given location ($location) already exists.\nSet REPLACE_REPO=true to override." && return 1;
+
+	local result=
+	define_quiet_ppd # make pushd & popd silent if not DEBUG'ing, but we must call undefine_quiet_ppd before the function returns
+
+	mkdir -p $location && \
+	pushd $location && {
+	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet;
+	git init --bare --shared $QUIET_ARG
+	result=$?
+	[ -z "$description" ] || echo "$description" > description
+	popd
+
+	undefine_quiet_ppd
+	return $result; }
+}
+
+# EOF create_bare_repository
