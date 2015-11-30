@@ -1,8 +1,10 @@
 #!/bin/env bash
 # Autoincluded by .bash_profile (TODO: review this file)
 
-# Useful git functions are defined each in their own file under ./fun/
+${SYSFUN}-file-entry $BASH_SOURCE "git/" "
+  git/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
 
+# Useful git functions are defined each in their own file under ./fun/
 for funfile in fun/*; do
   # skips all files named with all caps so README's are not included :)
   [[ $funfile =~ ^[A-Z]*$ ]] || \
@@ -16,5 +18,7 @@ for funfile in fun/*; do
   esac
 done
 unset funfile
+
+${SYSFUN}-file-exit $BASH_SOURCE "git/"
 
 # EOF

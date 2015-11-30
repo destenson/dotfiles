@@ -1,6 +1,9 @@
 #!/bin/env bash
 # Autoincluded by .bash_profile (TODO: review this file)
 
+${SYSFUN}-file-entry $BASH_SOURCE "bash/" "
+  bash/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
+
 # Useful bash functions are defined each in their own file under ./fun/
 
 for funfile in fun/*; do
@@ -85,5 +88,7 @@ if [ 0 -ne 0 ]; then
 #}
 
 fi # if [ 0 -ne 0 ]; then
+
+${SYSFUN}-file-exit $BASH_SOURCE "bash/" 
 
 # EOF
