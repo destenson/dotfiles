@@ -10,6 +10,8 @@
 # > some_cmd && et || ef
 alias et='echo true'
 alias ef='{ echo false && false; }'
+alias dbg_et='{ [ -z $DEBUG ] || echo true; true; }'
+alias dbg_ef='{ [ -z $DEBUG ] || echo false; false; }'
 
 alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 
