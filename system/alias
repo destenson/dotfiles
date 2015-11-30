@@ -13,6 +13,18 @@ alias ef='{ echo false && false; }'
 
 alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 
+# defined in system/fun/*
+alias is-linux='is-linux -v'
+alias is-mac='is-mac -v'
+alias is-git-bash='is-git-bash -v'
+alias is-mingw='is-mingw -v'
+alias is-cygwin='is-cygwin -v'
+alias is-win32='is-win32 -v'
+alias is-win64='is-win64 -v'
+alias is-windows='is-windows -v'
+alias is-windows-nt='is-windows-nt -v'
+
+
 # not sure what this is for... using hub instead of git (what's hub?)
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
 

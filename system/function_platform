@@ -1,13 +1,3 @@
 # Platform finders
 
 
-alias is-linux='is-linux -v'
-alias is-mac='is-mac -v'
-alias is-git-bash='is-git-bash -v'
-alias is-mingw='is-mingw -v'
-alias is-cygwin='is-cygwin -v'
-alias is-win32='is-win32 -v'
-alias is-win64='is-win64 -v'
-alias is-windows='is-windows -v'
-alias is-windows-nt='is-windows-nt -v'
-
