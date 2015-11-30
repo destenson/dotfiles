@@ -1,7 +1,8 @@
-#!/bin/env bash
+#!/bin/sh
 
 # Show line, optionally show surrounding lines
-function line() {
+function line()
+{
     local LINE_NUMBER=$1
     local LINES_AROUND=${2:-0}
     sed -n "`expr $LINE_NUMBER - $LINES_AROUND`,`expr $LINE_NUMBER + $LINES_AROUND`p"

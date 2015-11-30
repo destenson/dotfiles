@@ -1,7 +1,8 @@
-#!/bin/env bash
+#!/bin/sh
 
-function TEMPLATE()
+function is-true()
 {
+	eval "$*" && echo true || { echo false && false; }
 }
 
-# EOF TEMPLATE
+# EOF is-true

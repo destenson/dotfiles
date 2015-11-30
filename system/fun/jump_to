@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#TODO: jump_to folder
+#jump_to folder should find a parallel directory named folder to jump to.
+#For example:
+#  if cwd = /home/u/my/folder/working/here
+#and there exists a /home/u/your/folder/working/here, then
+#  jump_to your
+#should cd ../../../../your/folder/working/here;
+
+echo "jump_to is NOT IMPLEMENTED"
+
+# EOF jump_to

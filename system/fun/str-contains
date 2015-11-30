@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# String contains
+function str-contains()
+{
+  # if we were asked to be verbose with a -v argument 3rd
+  [ $# -gt 2 ] && [ "x$3" = "x-v" ] && \
+    { { echo "$1" | grep "$2" > /dev/null 2>&1; } && { echo "$1 does contain $2"; true; } || { echo "$1 does not contain $2"; false; }; } || \
+    { echo "$1" | grep "$2" > /dev/null 2>&1; }
+}
+
+# EOF str-contains

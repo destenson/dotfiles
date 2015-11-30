@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 
 function is-cygwin(){
   str-contains "$OS" "Cygwin" $*

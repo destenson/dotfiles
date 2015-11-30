@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Get named var (usage: get "VAR_NAME")
+function get() {
+    echo "${!1}"
+}
+
+# EOF get

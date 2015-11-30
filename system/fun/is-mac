@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 
 function is-mac() {
   str-contains "$OS" "Darwin" $* || str-contains "$OS" "OSX" $*

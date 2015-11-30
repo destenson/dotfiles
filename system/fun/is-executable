@@ -1,7 +1,10 @@
-#!/bin/env bash
+#!/bin/sh
 
-function TEMPLATE()
+# Executable
+function is-executable()
 {
+    local BIN=$((command -v "$1" || which "$1") 2>/dev/null)
+    [[ ! $BIN == "" && -x $BIN ]]
 }
 
-# EOF TEMPLATE
+# EOF is-executable

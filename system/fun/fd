@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Fuzzy find dir
+function fd()
+{
+	find . -type d -iname "$1";
+}
+
+# EOF fd

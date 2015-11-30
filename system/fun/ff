@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Fuzzy find file
+function ff()
+{
+	find . -type f -iname "$1";
+}
+
+# EOF ff
