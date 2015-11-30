@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+function define_quiet_ppd()
+{
+	# These functions only allow the default output of pushd/popd when DEBUG is not empty
+	function pushd() { eval ${PUSHD:-'[ -z $DEBUG ] && command pushd "$@" 2&> /dev/null || command pushd "$@"'}; }
+	function popd() { eval ${POPD:-'[ -z $DEBUG ] && command popd "$@" 2&> /dev/null || command popd "$@"'}; }
+}
+
+# EOF define_quiet_ppd

@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+# Create a git.io short URL
+function gitio() {
+	[[ -z "${1}" || -z "${2}" ]] && echo "Usage: \`gitio slug url\`" && return 1
+	curl -i http://git.io/ -F "url=${2}" -F "code=${1}"
+}
+
+# EOF gitio

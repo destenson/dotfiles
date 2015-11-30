@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+function undefine_quiet_ppd()
+{
+	# unset the functions we defined previously by calling define_quiet_ppd()
+	unset pushd
+	unset popd
+}
+
+# EOF undefine_quiet_ppd
