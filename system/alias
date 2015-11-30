@@ -31,14 +31,6 @@ alias is-windows-nt='is-windows-nt -v'
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
 
 # helper function
-function is-supported() {
-    if [ $# -eq 1 ]; then
-        eval "$1" > /dev/null 2>&1
-    else
-        eval "$1" > /dev/null 2>&1 && echo -n "$2" || echo -n "$3"
-    fi
-}
-
 # Global aliases
 
 #if is-supported "alias -g"; then
