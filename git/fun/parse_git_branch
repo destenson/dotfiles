@@ -1,0 +1,9 @@
+#!/bin/env bash
+
+parse_git_branch()
+{
+    local OUT=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+    [ -z $OUT ] || echo " $OUT";
+}
+
+# EOF parse_git_branch
