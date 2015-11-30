@@ -1,13 +1,19 @@
 #!/bin/env bash
 # Autoincluded by .bash_profile (TODO: review this file)
 
+# Change this to 
+#SYSFUN=quiet
+#SYSFUN=basic
+SYSFUN=verbose
+
 ${SYSFUN}-file-entry $BASH_SOURCE "bash/" "
   bash/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
 
 # Useful bash functions are defined each in their own file under ./fun/
+#for f in *; do expr $f : "^[A-Z]*$" > /dev/null || echo $f;  done
 
-for funfile in fun/*; do
- for f in *; do expr $f : "^[A-Z]*$" > /dev/null || echo $f;  done
+pushd fun
+for funfile in *; do
   # skips all files named with all caps so README's are not included :)
   [[ $funfile =~ ^[A-Z]*$ ]] || \
   case "$funfile" in 
@@ -16,10 +22,11 @@ for funfile in fun/*; do
     *.txt)	;;
 	*.sh)	;;
     *)
-	  [ -f "$funfile" ] && [ -r "$funfile" ] && echo "Attempting to source $funfile" && pushd fun && . "$funfile" && popd ;;
+	  [[ -f "$funfile" && -r "$funfile" ]] && echo "Attempting to source $funfile" && . "$funfile" ;;
   esac
 done
-unset funfile
+popd
+unset f funfile
 
 
 # "commented out" by the following line and the last one in the file

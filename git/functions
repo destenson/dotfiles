@@ -1,22 +1,29 @@
 #!/bin/env bash
 # Autoincluded by .bash_profile (TODO: review this file)
 
+# Change this to 
+#SYSFUN=quiet
+#SYSFUN=basic
+SYSFUN=verbose
+
 ${SYSFUN}-file-entry $BASH_SOURCE "git/" "
   git/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
 
 # Useful git functions are defined each in their own file under ./fun/
-for funfile in fun/*; do
-  # skips all files named with all caps so README's are not included :)
-  [[ $funfile =~ ^[A-Z]*$ ]] || \
-  case "$funfile" in 
-    *~)		;;
-    *.bak)	;;
-    *.txt)	;;
-	*.sh)	;;
-    *)
-	  [ -f "$funfile" ] && [ -r "$funfile" ] && echo "Attempting to source $funfile" && pushd fun && . "$funfile" && popd ;;
-  esac
+pushd fun
+for funfile in *; do
+	# skips all files named with all caps so README's are not included :)
+	[[ $funfile =~ ^[A-Z]*$ ]] || \
+		case "$funfile" in 
+		*~)		;;
+		*.bak)	;;
+		*.txt)	;;
+		*.sh)	;;
+		*)
+			[[ -f "$funfile" && -r "$funfile" ]] && echo "Attempting to source $funfile" && . "$funfile" ;;
+	esac
 done
+popd
 unset funfile
 
 ${SYSFUN}-file-exit $BASH_SOURCE "git/"
