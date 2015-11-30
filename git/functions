@@ -11,12 +11,16 @@ function is_a_gitdir()
 	[ $# -ne 1 ] && errecho "Usage: is_a_gitdir [dir]" && return 1
 	[ -d $1 ] || { errecho "Usage: is_a_gitdir [dir]" && errecho "dir must be a directory" && return 1; }
 	(
-	pushd $1 &> /dev/null
+	define_quiet_ppd # make pushd & popd silent if not DEBUG'ing, but we must call undefine_quiet_ppd before the function returns
+	pushd $1
+
 	# if it contains the following 7 files and directories, then we consider it a "GIT_DIR" like a .git directory or a bare repository
 	[ -f config ] && [ -f description ] && [ -f HEAD ] &&\
 	[ -d hooks ] && [ -d info ] && [ -d objects ] && [ -d refs ]
 	rv=$?
-	popd &> /dev/null
+
+	popd
+	undefine_quiet_ppd
 	return $rv
 	) #&> /dev/null
 	return $?
@@ -56,14 +60,19 @@ create_bare_repository [-h | --help] [-v | --verbose] [-d | --directory] [path]"
 		
 	[ -e "$location" ] && epf "Given location ($location) already exists.\nSet REPLACE_REPO=true to override." && return 1;
 
-	mkdir -p $location
-	pushd $location &> /dev/null
-	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet
+	local result=
+	define_quiet_ppd # make pushd & popd silent if not DEBUG'ing, but we must call undefine_quiet_ppd before the function returns
+
+	mkdir -p $location && \
+	pushd $location && {
+	[ "x$verbose" != "xtrue" ] && local QUIET_ARG=--quiet;
 	git init --bare --shared $QUIET_ARG
-	local result=$?	
+	result=$?
 	[ -z "$description" ] || echo "$description" > description
-	popd &> /dev/null
-	return $result
+	popd
+
+	undefine_quiet_ppd
+	return $result; }
 }
 
 
