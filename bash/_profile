@@ -32,10 +32,10 @@ quiet-file-exit()  { true; }
 
 # Update the OS variable
 case $(uname -s) in
-  Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
-  MINGW*)  [ "$OS" != "*Bash?"      ] && OS="$OS (MinGW/Git Bash)" ;;
-  CYGWIN*) [ "$OS" != "*Cygwin?"    ] && OS="$OS (Cygwin)"         ;;
-  *)       [ "$OS" != "*$(osname)?" ] && OS="$OS ($osname)"        ;;
+	Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
+	MINGW*)  [ "$OS" != "*Bash?"      ] && OS="$OS (MinGW/Git Bash)" ;;
+	CYGWIN*) [ "$OS" != "*Cygwin?"    ] && OS="$OS (Cygwin)"         ;;
+	*)       [ "$OS" != "*$(osname)?" ] && OS="$OS ($osname)"        ;;
 esac
 export OS
 echo "Detected OS = ${OS}"
@@ -44,13 +44,13 @@ echo "Detected OS = ${OS}"
 READLINK=$((which greadlink || which readlink) 2> /dev/null)
 CURRENT_SCRIPT=$BASH_SOURCE
 if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
-  SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
-  DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
+	SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
+	DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
 elif [ -d "$HOME/.dotfiles" ]; then
-  DOTFILES_DIR="$HOME/.dotfiles"
+	DOTFILES_DIR="$HOME/.dotfiles"
 else
-  echo "Unable to find dotfiles, exiting."
-  return # `exit 1` would quit the shell itself
+	echo "Unable to find dotfiles, exiting."
+	return # `exit 1` would quit the shell itself
 fi
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
@@ -72,50 +72,50 @@ echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
 
 # source dotfiles from the system folder (alias must be first)
 for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}" | uniq); do
-  case "$dotfile" in 
-    *~)             ;;
-    *.bak)          ;;
-    *.txt)          ;;
-	*.sh)           ;;
-	*dir_colors)
-	  if is-supported "[ -l . ]"; then
-	    [ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors"
-	  else
-	    [ -f "$HOME/.dir_colors" ] || cp "$dotfile" "$HOME/.dir_colors"
-	  fi
-	  ;;
-    *)
-	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/system" && . "$dotfile" && popd ;;
-  esac
+	case "$dotfile" in 
+		*~)             ;;
+		*.bak)          ;;
+		*.txt)          ;;
+		*.sh)           ;;
+		*dir_colors)
+			if is-supported "[ -l . ]"; then
+				[ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors"
+			else
+				[ -f "$HOME/.dir_colors" ] || cp "$dotfile" "$HOME/.dir_colors"
+			fi
+			;;
+		*)
+			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/system" && . "$dotfile" && popd ;;
+	esac
 done
 unset dotfile
 
 # source dotfiles from the bash folder
 for dotfile in $(echo "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*} | uniq); do
-  case "$dotfile" in 
-    *_profile)      ;;
-    *~)             ;;
-    *.bak)          ;;
-    *.txt)          ;;
-	*.sh)           ;;
-	*bash/global.*) ;;
-    *)
-	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/bash" && . "$dotfile" && popd ;;
+	case "$dotfile" in 
+		*_profile)      ;;
+		*~)             ;;
+		*.bak)          ;;
+		*.txt)          ;;
+		*.sh)           ;;
+		*bash/global.*) ;;
+		*)
+			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/bash" && . "$dotfile" && popd ;;
   esac
 done
 unset dotfile
 
 # source dotfiles from the git folder
 for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq); do
-  case "$dotfile" in 
-    *~)             ;;
-    *.bak)          ;;
-    *.txt)          ;;
-	*.sh)           ;;
-	*git/global.*)  ;;
-    *)
-	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/git" && . "$dotfile" && popd ;;
-  esac
+	case "$dotfile" in 
+		*~)             ;;
+		*.bak)          ;;
+		*.txt)          ;;
+		*.sh)           ;;
+		*git/global.*)  ;;
+		*)
+			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/git" && . "$dotfile" && popd ;;
+	esac
 done
 unset dotfile
 
