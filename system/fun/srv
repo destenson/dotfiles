@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Webserver
+srv() {
+	is-executable http-server || echo "Requires http-server" && return
+    local PORT=${1:-80}
+    if [ "$PORT" -le "1024" ]; then
+		is-executable sudo && sudo -v || echo "Requires sudo"
+	fi
+    http-server . -p "$PORT" -c-1
+}
+
+# EOF srv
