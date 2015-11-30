@@ -85,7 +85,7 @@ for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,
 	  fi
 	  ;;
     *)
-	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && . "$dotfile" ;;
+	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/system" && . "$dotfile" && popd ;;
   esac
 done
 unset dotfile
@@ -99,7 +99,8 @@ for dotfile in $(echo "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*} | uniq);
     *.txt)          ;;
 	*.sh)           ;;
 	*bash/global.*) ;;
-    *) . "$dotfile" ;;
+    *)
+	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/bash" && . "$dotfile" && popd ;;
   esac
 done
 unset dotfile
@@ -112,7 +113,8 @@ for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq);
     *.txt)          ;;
 	*.sh)           ;;
 	*git/global.*)  ;;
-    *) . "$dotfile" ;;
+    *)
+	  [ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/git" && . "$dotfile" && popd ;;
   esac
 done
 unset dotfile
