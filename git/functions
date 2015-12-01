@@ -7,7 +7,7 @@
 SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "git/" "
-  git/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
+  git/functions provides: $(cd fun; ls | grep -v '^[A-Z]*$')"
 
 load_fun_dir
   

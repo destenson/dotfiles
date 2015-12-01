@@ -7,7 +7,7 @@
 SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "system/" "
-  system/function: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
+  system/function provides: $(cd fun; ls | grep -v '^[A-Z]*$')"
 
 load_fun_dir()
 {
