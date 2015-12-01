@@ -1,0 +1,27 @@
+#!/bin/sh
+
+[ -z $_PROFILE_BEING_SOURCED ] && echo "Ignoring this file (define _PROFILE_BEING_SOURCED to override)" && return
+
+function _onload() {
+	local f
+	for f in $(echo {functions*,aliases*,path,*} | sed 's/ /\n/g' | sed_remove_duplicate_lines); do
+		#echo -n "$f : "
+		[[ $f =~ ^[A-Z]*$
+		|| $f = _onload
+		|| $f = *_profile
+		|| $f = global.*
+		|| $f = *.bak
+		|| $f = *.txt
+		|| $f = *.sh
+		|| $f = *~ ]] || \
+		[[ -f "$f" && -r "$f" ]] && {
+			[ $VERBOSE_SOURCING = quiet ] || echo "Attempting to source $(basename $PWD)/$f";
+		} && echo "$f";# . "$f"
+	done
+}
+
+echo -n "function " && type _onload | tail -n +2
+
+_onload "$@"
+
+# EOF _onload
