@@ -9,23 +9,8 @@ SYSFUN=verbose
 ${SYSFUN}-file-entry $BASH_SOURCE "git/" "
   git/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
 
-# Useful git functions are defined each in their own file under ./fun/
-pushd fun
-for funfile in *; do
-	# skips all files named with all caps so README's are not included :)
-	[[ $funfile =~ ^[A-Z]*$ ]] || \
-		case "$funfile" in 
-		*~)		;;
-		*.bak)	;;
-		*.txt)	;;
-		*.sh)	;;
-		*)
-			[[ -f "$funfile" && -r "$funfile" ]] && echo "Attempting to source $funfile" && . "$funfile" ;;
-	esac
-done
-popd
-unset funfile
-
+load_fun_dir
+  
 ${SYSFUN}-file-exit $BASH_SOURCE "git/"
 
 # EOF

@@ -9,24 +9,28 @@ SYSFUN=verbose
 ${SYSFUN}-file-entry $BASH_SOURCE "system/" "
   system/function: provides $(cd fun; ls | grep -v '^[A-Z]*$')"
 
-#for f in *; do expr $f : "^[A-Z]*$" > /dev/null || echo $f;  done
-# Useful bash functions are defined each in their own file under ./fun/
-pushd fun
-for funfile in *; do
-  # skips all files named with all caps so README's are not included :)
-  [[ $funfile =~ ^[A-Z]*$ ]] || \
-  case "$funfile" in 
-    *~)		;;
-    *.bak)	;;
-    *.txt)	;;
-	*.sh)	;;
-    *)
-	  [ -f "$funfile" ] && [ -r "$funfile" ] && echo "Attempting to source $funfile" && . "$funfile" ;;
-  esac
-done
-unset funfile
-popd
+load_fun_dir()
+{
+	# Useful bash functions are defined each in their own file under ./fun/
+	pushd fun &> /dev/null && {\
+		local funfile
+		for funfile in *; do
+			# skips all files named with all caps so README's are not included :)
+			[[ $funfile =~ ^[A-Z]*$
+			|| $funfile = *_profile
+			|| $funfile = global.*
+			|| $funfile = *~
+			|| $funfile = *.bak
+			|| $funfile = *.txt
+			|| $funfile = *.sh ]] || \
+			[[ -f "$funfile" && -r "$funfile" ]] && {
+				[ "$SYSFUN" = quiet ] || echo "Attempting to source fun/$funfile";
+			} && . "$funfile"
+		done;
+	} && popd &> /dev/null
+}
 
+load_fun_dir
 
 ${SYSFUN}-file-exit $BASH_SOURCE "system/"
 

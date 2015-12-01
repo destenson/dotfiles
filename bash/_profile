@@ -16,10 +16,13 @@
 # if not running an interactive shell, return
 [ -z "$PS1" ] && return
 
-[ -z $DEBUG_DOTFILES ] || echo Debugging dotfiles
+[ -z "$DEBUG_DOTFILES" ] || echo "Debugging dotfiles"
 
-# Comment out the following to silence the statement printed each time a file is sourced
-VERBOSE_SOURCING=basic
+_PROFILE_BEING_SOURCED=yes
+
+VERBOSE_SOURCING=${VERBOSE_SOURCING:-verbose}
+#VERBOSE_SOURCING=${VERBOSE_SOURCING:-basic}
+#VERBOSE_SOURCING=${VERBOSE_SOURCING:-quiet}
 
 verbose-file-entry() { echo "->$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
 verbose-file-exit()  { echo "<-$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
@@ -30,6 +33,58 @@ basic-file-exit()  { echo "<-$2$(basename $1)"; }
 quiet-file-entry() { true; }
 quiet-file-exit()  { true; }
 
+${VERBOSE_SOURCING}-file-entry $BASH_SOURCE "bash/" "
+  bash/_profile provides: a custom environment"
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type verbose-file-entry | tail -n +2
+	echo -n "function " && type verbose-file-exit | tail -n +2
+	echo -n "function " && type basic-file-entry | tail -n +2
+	echo -n "function " && type basic-file-exit | tail -n +2
+	echo -n "function " && type quiet-file-entry | tail -n +2
+	echo -n "function " && type quiet-file-exit | tail -n +2
+}
+
+function eecho()       { echo "$@" >&2;   }
+function eprintf()     { printf "$@" >&2; }
+function dbg_echo()    { [ -z $DEBUG ] || echo "$@";    } 
+function dbg_printf()  { [ -z $DEBUG ] || printf "$@";  }
+function dbg_eecho()   { [ -z $DEBUG ] || eecho "$@";   }
+function dbg_eprintf() { [ -z $DEBUG ] || eprintf "$@"; }
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type eecho | tail -n +2
+	echo -n "function " && type eprintf | tail -n +2
+	echo -n "function " && type dbg_echo | tail -n +2
+	echo -n "function " && type dbg_printf | tail -n +2
+	echo -n "function " && type dbg_eecho | tail -n +2
+	echo -n "function " && type dbg_eprintf | tail -n +2
+}
+  
+# these are quite helpful for quickly debugging exit codes like this:
+# $ some_cmd && et || ef
+# false
+function et()  { echo true; }
+function ef()  { echo false && false; }
+function eet() { eecho true; }
+function eef() { eecho false && false; }
+function dbg_et()  { dbg_echo true; true; }
+function dbg_ef()  { dbg_echo false; false; }
+function dbg_eet() { dbg_eecho true; true; }
+function dbg_eef() { dbg_eecho false; false; }
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type et | tail -n +2
+	echo -n "function " && type ef | tail -n +2
+	echo -n "function " && type eet | tail -n +2
+	echo -n "function " && type eef | tail -n +2
+	echo -n "function " && type dbg_et | tail -n +2
+	echo -n "function " && type dbg_ef | tail -n +2
+	echo -n "function " && type dbg_eet | tail -n +2
+	echo -n "function " && type dbg_eef | tail -n +2
+}
+  
+
 # Update the OS variable
 case $(uname -s) in
 	Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
@@ -38,89 +93,40 @@ case $(uname -s) in
 	*)       [ "$OS" != "*$(osname)?" ] && OS="$OS ($osname)"        ;;
 esac
 export OS
-echo "Detected OS = ${OS}"
+dbg_echo "Detected OS = ${OS}"
 
 # Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
-READLINK=$((which greadlink || which readlink) 2> /dev/null)
-CURRENT_SCRIPT=$BASH_SOURCE
-if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
-	SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
-	DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
-elif [ -d "$HOME/.dotfiles" ]; then
-	DOTFILES_DIR="$HOME/.dotfiles"
-else
-	echo "Unable to find dotfiles, exiting."
-	return # `exit 1` would quit the shell itself
-fi
-unset READLINK CURRENT_SCRIPT SCRIPT_PATH
-export DOTFILES_DIR
-echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
+function get_dotfiles_dir()
+{
+	local READLINK=$((which greadlink || which readlink) 2> /dev/null);
+	local CURRENT_SCRIPT=${BASH_SOURCE};
+	if [[ -z "$CURRENT_SCRIPT" && -d "$HOME/.dotfiles" ]]; then
+		echo "$HOME/.dotfiles";
+	elif [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
+		local SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT");
+		echo $(dirname "$(dirname "$SCRIPT_PATH")");
+	else
+		eecho "Unable to find dotfiles, exiting.";
+	fi;
+}
+[ $VERBOSE_SOURCING = v* ] && echo -n "function " && type get_dotfiles_dir | tail -n +2
+export DOTFILES_DIR=${DOTFILES_DIR:-$(get_dotfiles_dir)}
+dbg_echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)";
 
-## Hook for extra/custom stuff
-#EXTRA_DIR="$HOME/.extra"
-#if [ -d "$EXTRA_DIR" ]; then
-#  for EXTRAFILE in $(echo "$EXTRA_DIR"/bin/*.{sh,[iI],inc} | uniq); do
-#    . "$EXTRAFILE"
-#  done
-#  unset EXTRAFILE
-#fi
-#export EXTRA_DIR
+function sed_remove_duplicate_lines() { sed -n 'G; s/\n/&&/; /^\([ -~]*\n\).*\n\1/d; s/\n//; h; P'; }
+[ $VERBOSE_SOURCING = v* ] && echo -n "function " && type sed_remove_duplicate_lines | tail -n +2
 
-## source the users bashrc if it exists
-#. "${HOME}/.bashrc"
+pushd "$DOTFILES_DIR/sh"     &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/system" &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/bash"   &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/git"    &> /dev/null && { . _onload; popd; }
 
-
-# source dotfiles from the system folder (alias must be first)
-for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}" | uniq); do
-	case "$dotfile" in 
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*dir_colors)
-			if is-supported "[ -l . ]"; then
-				[ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors"
-			else
-				[ -f "$HOME/.dir_colors" ] || cp "$dotfile" "$HOME/.dir_colors"
-			fi
-			;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/system" && . "$dotfile" && popd ;;
-	esac
-done
-unset dotfile
-
-# source dotfiles from the bash folder
-for dotfile in $(echo "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*} | uniq); do
-	case "$dotfile" in 
-		*_profile)      ;;
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*bash/global.*) ;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/bash" && . "$dotfile" && popd ;;
-  esac
-done
-unset dotfile
-
-# source dotfiles from the git folder
-for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq); do
-	case "$dotfile" in 
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*git/global.*)  ;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/git" && . "$dotfile" && popd ;;
-	esac
-done
-unset dotfile
+echo "bash/_profile is finished loading, but implementation is incomplete"
 
 
+${VERBOSE_SOURCING}-file-exit $BASH_SOURCE "bash/"
 
+unset _PROFILE_BEING_SOURCED VERBOSE_SOURCING
 return
 #incomplete
 
@@ -134,7 +140,7 @@ done
 unset dotfile;
 
 
-if [ 0 -ne 0 ]; then
+if [ 1 -ne 0 ]; then
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
@@ -151,7 +157,7 @@ complete -W "NSGlobalDomain" defaults;
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
-fi # if [ 0 -ne 0 ]; then
+fi # if [ 1 -ne 0 ]; then
 
 unset _PROFILE_BEING_SOURCED
 

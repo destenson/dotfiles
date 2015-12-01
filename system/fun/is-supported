@@ -2,9 +2,9 @@
 
 function is-supported() {
     if [ $# -eq 1 ]; then
-        eval "$1" > /dev/null 2>&1
+        eval "$1" &> /dev/null
     else
-        eval "$1" > /dev/null 2>&1 && echo -n "$2" || echo -n "$3"
+        eval "$1" &> /dev/null && echo -n "$2" || echo -n "$3"
     fi
 }
 
