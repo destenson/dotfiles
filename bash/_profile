@@ -58,19 +58,6 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
 echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
 
-## Hook for extra/custom stuff
-#EXTRA_DIR="$HOME/.extra"
-#if [ -d "$EXTRA_DIR" ]; then
-#  for EXTRAFILE in $(echo "$EXTRA_DIR"/bin/*.{sh,[iI],inc} | uniq); do
-#    . "$EXTRAFILE"
-#  done
-#  unset EXTRAFILE
-#fi
-#export EXTRA_DIR
-
-## source the users bashrc if it exists
-#. "${HOME}/.bashrc"
-
 
 # source dotfiles from the system folder (alias must be first)
 for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}" | uniq); do
@@ -137,7 +124,7 @@ done
 unset dotfile;
 
 
-if [ 0 -ne 0 ]; then
+if [ 1 -ne 0 ]; then
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
@@ -154,7 +141,7 @@ complete -W "NSGlobalDomain" defaults;
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
-fi # if [ 0 -ne 0 ]; then
+fi # if [ 1 -ne 0 ]; then
 
 unset _PROFILE_BEING_SOURCED
 
