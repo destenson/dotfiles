@@ -7,7 +7,7 @@ SYSFUN=basic
 #SYSFUN=verbose
 
 ${SYSFUN}-file-entry $BASH_SOURCE "bash/" "
-  bash/functions: provides $(cd fun; ls | grep -v '^[A-Z]*$' | xargs | sed 's/\n//g')"
+  bash/functions provides: $(cd fun; ls | grep -v '^[A-Z]*$' | xargs | sed 's/\n//g')"
 unset fns
 
 # Useful bash functions are defined each in their own file under ./fun/
