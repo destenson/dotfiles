@@ -56,19 +56,21 @@ export OS
 dbg_echo "Detected OS = ${OS}"
 
 # Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
-READLINK=$((which greadlink || which readlink) 2> /dev/null)
-CURRENT_SCRIPT=$BASH_SOURCE
-if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
-	SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
-	DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
-elif [ -d "$HOME/.dotfiles" ]; then
-	DOTFILES_DIR="$HOME/.dotfiles"
-else
-	echo "Unable to find dotfiles, exiting."
-	return # `exit 1` would quit the shell itself
-fi
-unset READLINK CURRENT_SCRIPT SCRIPT_PATH
-export DOTFILES_DIR
+function get_dotfiles_dir()
+{
+	local READLINK=$((which greadlink || which readlink) 2> /dev/null);
+	local CURRENT_SCRIPT=${BASH_SOURCE};
+	if [[ -z "$CURRENT_SCRIPT" && -d "$HOME/.dotfiles" ]]; then
+		echo "$HOME/.dotfiles";
+	elif [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
+		local SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT");
+		echo $(dirname "$(dirname "$SCRIPT_PATH")");
+	else
+		eecho "Unable to find dotfiles, exiting.";
+	fi;
+}
+[ $VERBOSE_SOURCING = v* ] && echo -n "function " && type get_dotfiles_dir | tail -n +2
+export DOTFILES_DIR=${DOTFILES_DIR:-$(get_dotfiles_dir)}
 dbg_echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)";
 
 
