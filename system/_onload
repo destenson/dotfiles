@@ -1,0 +1,37 @@
+#!/bin/sh
+
+[ -z $_PROFILE_BEING_SOURCED ] && echo "Ignoring this file (define _PROFILE_BEING_SOURCED to override)" && return
+
+function _onload() {
+	local f
+	for f in $(echo {alias,function,function_*,path,env,completion,grep,prompt,custom,*} | sed 's/ /\n/g' | sed_remove_duplicate_lines); do
+		#echo -n "$f : "
+		[[ $f =~ ^[A-Z]*$
+		|| $f = _onload
+		|| $f = *.bak
+		|| $f = *.txt
+		|| $f = *.sh
+		|| $f = *~ ]] || \
+		case "$f" in 
+			*dir_colors)
+				if is-supported '[ -l $HOME/. ]'; then
+					[ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$f" "$HOME/.dir_colors"
+				else
+					[ -f "$HOME/.dir_colors" ] || cp "$f" "$HOME/.dir_colors"
+				fi
+			;;
+			*)  # if $f is a readable file, print a message if not quiet, then source the file
+				[[ -f "$f" && -r "$f" ]] && {
+					[ $VERBOSE_SOURCING = q* ] || echo "Attempting to source $(basename $PWD)/$f";
+				} && . "$f"
+			;;
+		esac
+	done
+}
+
+echo -n "function " && type _onload | tail -n +2
+
+_onload "$@"
+
+
+# EOF _onload
