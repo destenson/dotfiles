@@ -18,6 +18,8 @@
 
 [ -z "$DEBUG_DOTFILES" ] || echo "Debugging dotfiles"
 
+_PROFILE_BEING_SOURCED=yes
+
 # Comment out the following to silence the statement printed each time a file is sourced
 VERBOSE_SOURCING=basic
 
@@ -119,8 +121,9 @@ for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq);
 done
 unset dotfile
 
+echo "bash/_profile is finished loading, but implementation is incomplete"
 
-
+unset _PROFILE_BEING_SOURCED
 return
 #incomplete
 
