@@ -16,7 +16,7 @@
 # if not running an interactive shell, return
 [ -z "$PS1" ] && return
 
-[ -z $DEBUG_DOTFILES ] || echo Debugging dotfiles
+[ -z "$DEBUG_DOTFILES" ] || echo "Debugging dotfiles"
 
 # Comment out the following to silence the statement printed each time a file is sourced
 VERBOSE_SOURCING=basic
