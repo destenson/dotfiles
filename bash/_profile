@@ -131,7 +131,6 @@ return
 #incomplete
 
 
-
 # Load the shell dotfiles, and then some:
 # any file called ~/.bash*.user can be used to extend this file locally without being checked into git
 for dotfile in ~/.bash*.user; do
