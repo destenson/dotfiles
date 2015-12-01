@@ -20,8 +20,9 @@
 
 _PROFILE_BEING_SOURCED=yes
 
-# Comment out the following to silence the statement printed each time a file is sourced
-VERBOSE_SOURCING=basic
+VERBOSE_SOURCING=${VERBOSE_SOURCING:-verbose}
+#VERBOSE_SOURCING=${VERBOSE_SOURCING:-basic}
+#VERBOSE_SOURCING=${VERBOSE_SOURCING:-quiet}
 
 verbose-file-entry() { echo "->$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
 verbose-file-exit()  { echo "<-$2$(basename $1)" && shift && shift && [ $# -gt 0 ] && echo "$@"; }
@@ -32,6 +33,18 @@ basic-file-exit()  { echo "<-$2$(basename $1)"; }
 quiet-file-entry() { true; }
 quiet-file-exit()  { true; }
 
+${VERBOSE_SOURCING}-file-entry $BASH_SOURCE "bash/" "
+  bash/_profile provides: a custom environment"
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type verbose-file-entry | tail -n +2
+	echo -n "function " && type verbose-file-exit | tail -n +2
+	echo -n "function " && type basic-file-entry | tail -n +2
+	echo -n "function " && type basic-file-exit | tail -n +2
+	echo -n "function " && type quiet-file-entry | tail -n +2
+	echo -n "function " && type quiet-file-exit | tail -n +2
+}
+
 # Update the OS variable
 case $(uname -s) in
 	Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
@@ -40,7 +53,7 @@ case $(uname -s) in
 	*)       [ "$OS" != "*$(osname)?" ] && OS="$OS ($osname)"        ;;
 esac
 export OS
-echo "Detected OS = ${OS}"
+dbg_echo "Detected OS = ${OS}"
 
 # Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
 READLINK=$((which greadlink || which readlink) 2> /dev/null)
@@ -56,7 +69,7 @@ else
 fi
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH
 export DOTFILES_DIR
-echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)"
+dbg_echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)";
 
 
 # source dotfiles from the system folder (alias must be first)
@@ -110,7 +123,10 @@ unset dotfile
 
 echo "bash/_profile is finished loading, but implementation is incomplete"
 
-unset _PROFILE_BEING_SOURCED
+
+${VERBOSE_SOURCING}-file-exit $BASH_SOURCE "bash/"
+
+unset _PROFILE_BEING_SOURCED VERBOSE_SOURCING
 return
 #incomplete
 
