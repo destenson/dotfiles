@@ -1,47 +1,34 @@
 # Shortcuts
 
-#alias _="sudo"
-#alias g="git"
-#alias v="vim"
-#alias rr="rm -rf"
-#alias json="json -c"
+# Change this to 
+#SYSFUN=quiet
+#SYSFUN=basic
+SYSFUN=verbose
 
-# these are quite helpful for quickly debugging exit codes like this:
-# $ some_cmd && et || ef
-alias et='echo true'
-alias ef='{ echo false && false; }'
-alias dbg_et='{ [ -z $DEBUG ] || echo true; true; }'
-alias dbg_ef='{ [ -z $DEBUG ] || echo false; false; }'
+${SYSFUN:-quiet}-file-entry $BASH_SOURCE "system/" "
+  system/alias provides: many useful custom aliases"
 
 alias current-src-path='echo $(cd $(dirname "$BASH_SOURCE"); pwd)'
 
-# defined in system/fun/*
-alias is-linux='is-linux -v'
-alias is-mac='is-mac -v'
-alias is-git-bash='is-git-bash -v'
-alias is-mingw='is-mingw -v'
-alias is-cygwin='is-cygwin -v'
-alias is-win32='is-win32 -v'
-alias is-win64='is-win64 -v'
-alias is-windows='is-windows -v'
-alias is-windows-nt='is-windows-nt -v'
 alias .='src'
 alias prepend-path='prepend-to-path PATH'
 
+if [ "x$DEBUG" != "x" ]; then
+	# defined in system/fun/*
+	alias is-linux='is-linux -v'
+	alias is-mac='is-mac -v'
+	alias is-git-bash='is-git-bash -v'
+	alias is-mingw='is-mingw -v'
+	alias is-cygwin='is-cygwin -v'
+	alias is-win32='is-win32 -v'
+	alias is-win64='is-win64 -v'
+	alias is-windows='is-windows -v'
+	alias is-windows-nt='is-windows-nt -v'
+fi
 
 
 # not sure what this is for... using hub instead of git (what's hub?)
 #is-executable hub && eval "$(hub alias -s)" # alias git=hub
-
-# helper function
-# Global aliases
-
-#if is-supported "alias -g"; then
-#    alias -g G="| grep -i"
-#    alias -g H="| head"
-#    alias -g T="| tail"
-#    alias -g L="| less"
-#fi
 
 # List declared aliases, functions
 
@@ -108,5 +95,23 @@ alias cleanupad="find . -type d -name '.AppleD*' -ls -exec /bin/rm -r {} \;"
 #alias quit="exit"
 alias week="date +%V"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+
+#alias _="sudo"
+#alias g="git"
+#alias v="vim"
+#alias rr="rm -rf"
+#alias json="json -c"
+
+# helper function
+# Global aliases
+
+#if is-supported "alias -g"; then
+#    alias -g G="| grep -i"
+#    alias -g H="| head"
+#    alias -g T="| tail"
+#    alias -g L="| less"
+#fi
+
+${SYSFUN:-quiet}-file-exit $BASH_SOURCE "system/"
 
 # EOF

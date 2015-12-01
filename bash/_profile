@@ -45,6 +45,46 @@ ${VERBOSE_SOURCING}-file-entry $BASH_SOURCE "bash/" "
 	echo -n "function " && type quiet-file-exit | tail -n +2
 }
 
+function eecho()       { echo "$@" >&2;   }
+function eprintf()     { printf "$@" >&2; }
+function dbg_echo()    { [ -z $DEBUG ] || echo "$@";    } 
+function dbg_printf()  { [ -z $DEBUG ] || printf "$@";  }
+function dbg_eecho()   { [ -z $DEBUG ] || eecho "$@";   }
+function dbg_eprintf() { [ -z $DEBUG ] || eprintf "$@"; }
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type eecho | tail -n +2
+	echo -n "function " && type eprintf | tail -n +2
+	echo -n "function " && type dbg_echo | tail -n +2
+	echo -n "function " && type dbg_printf | tail -n +2
+	echo -n "function " && type dbg_eecho | tail -n +2
+	echo -n "function " && type dbg_eprintf | tail -n +2
+}
+  
+# these are quite helpful for quickly debugging exit codes like this:
+# $ some_cmd && et || ef
+# false
+function et()  { echo true; }
+function ef()  { echo false && false; }
+function eet() { eecho true; }
+function eef() { eecho false && false; }
+function dbg_et()  { dbg_echo true; true; }
+function dbg_ef()  { dbg_echo false; false; }
+function dbg_eet() { dbg_eecho true; true; }
+function dbg_eef() { dbg_eecho false; false; }
+
+[ $VERBOSE_SOURCING = v* ] && {
+	echo -n "function " && type et | tail -n +2
+	echo -n "function " && type ef | tail -n +2
+	echo -n "function " && type eet | tail -n +2
+	echo -n "function " && type eef | tail -n +2
+	echo -n "function " && type dbg_et | tail -n +2
+	echo -n "function " && type dbg_ef | tail -n +2
+	echo -n "function " && type dbg_eet | tail -n +2
+	echo -n "function " && type dbg_eef | tail -n +2
+}
+  
+
 # Update the OS variable
 case $(uname -s) in
 	Darwin)  [ "$OS" != "*OSX?"       ] && OS="$OS (OSX)"            ;;
@@ -73,55 +113,13 @@ function get_dotfiles_dir()
 export DOTFILES_DIR=${DOTFILES_DIR:-$(get_dotfiles_dir)}
 dbg_echo "Detected DOTFILES_DIR = ${DOTFILES_DIR} ($BASH_SOURCE)";
 
+function sed_remove_duplicate_lines() { sed -n 'G; s/\n/&&/; /^\([ -~]*\n\).*\n\1/d; s/\n//; h; P'; }
+[ $VERBOSE_SOURCING = v* ] && echo -n "function " && type sed_remove_duplicate_lines | tail -n +2
 
-# source dotfiles from the system folder (alias must be first)
-for dotfile in $(echo "$DOTFILES_DIR/system/{alias,function,function_*,path,env,completion,grep,prompt,custom,*}" | uniq); do
-	case "$dotfile" in 
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*dir_colors)
-			if is-supported "[ -l . ]"; then
-				[ -f "$HOME/.dir_colors" || -l "$HOME/.dir_colors" ] || ln -s "$dotfile" "$HOME/.dir_colors"
-			else
-				[ -f "$HOME/.dir_colors" ] || cp "$dotfile" "$HOME/.dir_colors"
-			fi
-			;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/system" && . "$dotfile" && popd ;;
-	esac
-done
-unset dotfile
-
-# source dotfiles from the bash folder
-for dotfile in $(echo "$DOTFILES_DIR"/bash/{functions*,aliases*,path,*} | uniq); do
-	case "$dotfile" in 
-		*_profile)      ;;
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*bash/global.*) ;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/bash" && . "$dotfile" && popd ;;
-  esac
-done
-unset dotfile
-
-# source dotfiles from the git folder
-for dotfile in $(echo "$DOTFILES_DIR"/git/{functions*,aliases*,path*,*} | uniq); do
-	case "$dotfile" in 
-		*~)             ;;
-		*.bak)          ;;
-		*.txt)          ;;
-		*.sh)           ;;
-		*git/global.*)  ;;
-		*)
-			[ -f "$dotfile" ] && [ -r "$dotfile" ] && echo "Attempting to source $dotfile" && pushd "$DOTFILES_DIR/git" && . "$dotfile" && popd ;;
-	esac
-done
-unset dotfile
+pushd "$DOTFILES_DIR/sh"     &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/system" &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/bash"   &> /dev/null && { . _onload; popd; }
+pushd "$DOTFILES_DIR/git"    &> /dev/null && { . _onload; popd; }
 
 echo "bash/_profile is finished loading, but implementation is incomplete"
 

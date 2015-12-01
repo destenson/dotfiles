@@ -1,5 +1,48 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
+# List declared aliases, functions
+alias listaliases="alias | sed 's/=.*//'"
+alias listfunctions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'" # show non _prefixed functions
+
+# Network
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+
+# Request using GET, POST, etc. method
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+    alias "$method"="lwp-request -m '$method'"
+done
+unset method
+
+# Miscellaneous
+alias quit="exit"
+alias week="date +%V"
+alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+
+# Shortcuts
+alias d="cd ~/Documents/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+#alias g="git"
+alias h="history"
+alias j="jobs"
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
 # Shortcuts
 #alias _="sudo"
 #alias g="git"
@@ -17,11 +60,6 @@
 #    alias -g L="| less"
 #fi
 
-# List declared aliases, functions
-
-alias listaliases="alias | sed 's/=.*//'"
-alias listfunctions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'" # show non _prefixed functions
-
 ## rsync
 #alias rsync="rsync -vh"
 
@@ -30,48 +68,10 @@ alias listfunctions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'" # show non 
 #alias nun="npm uninstall"
 #alias nup="npm update"
 
-# Network
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
-
-# Request using GET, POST, etc. method
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-    alias "$method"="lwp-request -m '$method'"
-done
-
-# Miscellaneous
-alias quit="exit"
-alias week="date +%V"
-alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
-
 # "commented out" by the following line and the last one in the file
 if [ 0 -ne 0 ]; then
+true
 
-# Shortcuts
-alias d="cd ~/Documents/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
-#alias g="git"
-alias h="history"
-alias j="jobs"
-
-
-
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-# Enable aliases to be sudo’ed
-alias sudo='sudo '
-
-# Get week number
-alias week='date +%V'
-
-# Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
 ## Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 #alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'

@@ -2,7 +2,7 @@
 
 function is-true()
 {
-	eval "$*" && echo true || { echo false && false; }
+	eval "$@" && dbg_et || dbg_ef
 }
 
 # EOF is-true
