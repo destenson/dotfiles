@@ -16,7 +16,7 @@
 # if not running an interactive shell, return
 [ -z "$PS1" ] && return
 
-[ -z "$DEBUG_DOTFILES" ] || echo "Debugging dotfiles"
+[ -z "$DEBUGGING_DOTFILES" ] || echo "Debugging dotfiles"
 
 _PROFILE_BEING_SOURCED=yes
 
