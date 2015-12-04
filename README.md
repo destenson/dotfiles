@@ -36,7 +36,9 @@ Suggestions/improvements
 * anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
 
 
-
+#
+# EOF
+# 
 
 
 
