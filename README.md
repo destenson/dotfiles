@@ -17,8 +17,9 @@ Suggestions/improvements
 
 ## Thanks to…
 
-* @webpro and his .files repository (https://github.com/webpro/dotfiles.git)
-* [Mathias Bynens](https://mathiasbynens.be/) and his [dotfiles repository] (https://github.com/mathiasbynens/dotfiles.git)
+* @webpro and his [.files repository](https://github.com/webpro/dotfiles.git)
+* [Mathias Bynens](https://mathiasbynens.be/) and his [dotfiles repository](https://github.com/mathiasbynens/dotfiles.git)
+* The github [dotfiles community](https://dotfiles.github.io/)
 * @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
 * [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)
 * [Chris Gerke](http://www.randomsquared.com/) and his [tutorial on creating an OS X SOE master image](http://chris-gerke.blogspot.com/2012/04/mac-osx-soe-master-image-day-7.html) + [_Insta_ repository](https://github.com/cgerke/Insta)
