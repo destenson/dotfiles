@@ -1,0 +1,44 @@
+# Autoincluded by .bash_profile (TODO: review this file)
+
+
+if [ 0 -ne 0 ]; then
+
+add_to_path PATH "/bin"
+add_to_path PATH "/usr/bin"
+add_to_path PATH "/usr/local/bin"
+add_to_path PATH "${DOTFILES_DIR}/bin"
+add_to_path PATH "${HOME}/bin"
+add_to_path PATH "/sbin"
+add_to_path PATH "/usr/sbin"
+add_to_path PATH "/usr/local/sbin"
+
+prepend-path "/bin"
+prepend-path "/usr/bin"
+prepend-path "/usr/local/bin"
+prepend-path "/sbin"
+prepend-path "/usr/sbin"
+prepend-path "/usr/local/sbin"
+
+# Set work specific path
+add_to_path PATH "${HOME}/.work/bin"
+
+# Set MANPATH so it includes users' private man if it exists
+add_to_path MANPATH "${HOME}/man"
+
+# Set INFOPATH so it includes users' private info if it exists
+add_to_path INFOPATH "${HOME}/info"
+
+unset add_to_path
+
+# Remove duplicates (preserving prepended items)
+# Source: http://unix.stackexchange.com/a/40755
+
+PATH=`echo -n $PATH | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
+
+# Wrap up
+
+export PATH
+
+fi # if [ 0 -ne 0 ]; then
+
+#EOF 

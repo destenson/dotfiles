@@ -1,0 +1,12 @@
+# Autoincluded by .bash_profile (TODO: review this file)
+
+# cd
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~"						# `cd` is probably faster to type though
+alias -- -="cd -"					# Go to previous dir with -
+alias cd.='cd $(readlink -f .)'		# Go to real dir (i.e. if current dir is linked)
+

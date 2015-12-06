@@ -1,0 +1,33 @@
+# Autoincluded by .bash_profile (TODO: review this file)
+
+prepend-path "/bin"
+prepend-path "/usr/bin"
+prepend-path "/usr/local/bin"
+prepend-path "${DOTFILES_DIR}/bin"
+prepend-path "${HOME}/bin"
+prepend-path "/sbin"
+prepend-path "/usr/sbin"
+prepend-path "/usr/local/sbin"
+
+# Set work specific path
+prepend-path "${HOME}/.work/bin"
+
+if is-executable awk; then
+  # I don't know which of the following is better
+  
+  # Remove duplicates (preserving prepended items)
+  # Source: http://unix.stackexchange.com/a/40755
+  PATH=`echo -n $PATH | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
+
+  # Source: http://stackoverflow.com/questions/1872692/removing-duplicates-on-a-variable-without-sorting
+  #PATH=$(awk 'BEGIN{RS=ORS=":"}!a[$0]++' <<<$PATH)
+else
+  IFS=', ' read -r -a array <<< "$PATH"
+  # now we have an array of paths in array
+  PATH="$PATH"
+fi
+
+# Wrap up
+export PATH
+
+#EOF
