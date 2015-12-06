@@ -1,9 +1,9 @@
 ## Prompt (TODO: review)
 
-if echo $OS | grep "Git Bash" > /dev/null; then
+if is-git-bash; then
 # Git Bash already configures the prompt, so skip this file
-	#echo "In Git Bash: skipping prompt config file"
-	true
+	echo "In Git Bash: skipping prompt config file"
+#TODO: implement the following on Git Bash too
 else
 
 _bash_prompt_config() {
@@ -95,13 +95,15 @@ bash_prompt_command() {
     if [[ $EXIT_CODE != 0 ]]; then
         P_EXIT+="${P_RED}✘ "
     fi
+	
+	if 
+	
+	local git_email=$(git config --get user.email)
+	P_USER=$(echo $git_email | cut -d @ -f 1)
+	P_HOST=$(echo $git_email | cut -d @ -f 2)
+	local P_EMAIL=${P_USER}${WHITE}@${CYAN}${P_HOST}
 
-    PS1="${P_EXIT}${P_USER}${P_WHITE}@${P_HOST} ${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
-}
-
-parse_git_branch() {
-    local OUT=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
-    if [ "$OUT" != "" ]; then echo " $OUT"; fi
+    PS1="${SHLVL}${P_EXIT}${P_EMAIL} ${P_YELLOW}${P_PWD}${P_GREEN}${P_GIT}${P_YELLOW} ❯ ${P_RESET}"
 }
 
 _bash_prompt_config
@@ -110,3 +112,5 @@ unset _bash_prompt_config
 PROMPT_COMMAND=bash_prompt_command
 
 fi
+
+# EOF

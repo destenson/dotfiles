@@ -1,0 +1,16 @@
+#!/bin/env bash
+# Autoincluded by .bash_profile (TODO: review this file)
+
+# Change this to 
+#SYSFUN=quiet
+#SYSFUN=basic
+SYSFUN=verbose
+
+${SYSFUN}-file-entry $BASH_SOURCE "git/" "
+  git/functions provides: $(cd fun; ls | grep -v '^[A-Z]*$')"
+
+load_fun_dir
+  
+${SYSFUN}-file-exit $BASH_SOURCE "git/"
+
+# EOF

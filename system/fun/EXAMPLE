@@ -1,0 +1,9 @@
+#!/bin/sh
+
+function is_samedir()
+{
+	[ $# -ne 2 ] && { echo "Usage: is_samedir [dir A] [dir B]" && return 1; }  > /dev/stderr
+	[[ $(cd $2; pwd) = $(cd $1; pwd) ]]
+}
+
+# EOF is_samedir

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Clean caches
+function cleanup()
+{
+    is-executable npm && npm cache clean
+    is-executable brew && brew cleanup
+    is-executable brew && brew cask cleanup
+    is-executable rvm && rvm cleanup all
+}
+
+# EOF cleanup

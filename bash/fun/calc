@@ -1,0 +1,20 @@
+#!/bin/env bash
+
+# Simple calculator
+function calc() {
+	local result="";
+	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')";
+	#                       ^- default (when `--mathlib` is used) is 20
+
+	if [[ "$result" = *.* ]]; then
+		# improve the output for decimal numbers:
+		#                         ".x -> 0.x"    "-.x -> -0.x"    remove trailing zeros or lone decimal
+		printf "$result" | sed -e 's/^\./0./' -e 's/^-\./-0./' -e 's/0*$//;s/\.$//';
+	else
+		printf "$result";
+	fi;
+	printf "\n";
+}
+type calc
+
+# EOF calc

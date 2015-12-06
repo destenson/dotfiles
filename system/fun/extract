@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Extract many types of compressed files
+# Source: http://nparikh.org/notes/zshrc.txt
+
+function extract()
+{
+	local rv=
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)  tar -jxvf "$1"                    ; rv=$? ;;
+            *.tar.gz)   tar -zxvf "$1"                    ; rv=$? ;;
+            *.bz2)      bunzip2 "$1"                      ; rv=$? ;;
+            *.dmg)      hdiutil mount "$1"                ; rv=$? ;;
+            *.gz)       gunzip "$1"                       ; rv=$? ;;
+            *.tar)      tar -xvf "$1"                     ; rv=$? ;;
+            *.tbz2)     tar -jxvf "$1"                    ; rv=$? ;;
+            *.tgz)      tar -zxvf "$1"                    ; rv=$? ;;
+            *.zip)      unzip "$1"                        ; rv=$? ;;
+            *.ZIP)      unzip "$1"                        ; rv=$? ;;
+            *.pax)      cat "$1" | pax -r                 ; rv=$? ;;
+            *.pax.Z)    uncompress "$1" --stdout | pax -r ; rv=$? ;;
+            *.Z)        uncompress "$1"                   ; rv=$? ;;
+            *)          echo "'$1' cannot be extracted/mounted via extract()"; rv=1 ;;
+        esac
+    else
+        echo "'$1' is not a valid file to extract"
+		rv=1
+    fi
+	return $rv
+}
+
+# EOF extract

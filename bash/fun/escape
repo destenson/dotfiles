@@ -1,0 +1,11 @@
+#!/bin/env bash
+
+# UTF-8-encode a string of Unicode symbols
+function escape()
+{
+	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
+	# print a newline unless we’re piping the output to another program
+	[ -t 1 ] && echo # newline
+}
+
+# EOF escape

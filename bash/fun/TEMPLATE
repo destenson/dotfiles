@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+function TEMPLATE()
+{
+}
+
+# EOF TEMPLATE

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# TODO: test to verify that this works in sh
+
+ask-are-you-sure()
+{
+	read -r -p "Are you sure? [y/N] " response
+	case $response in
+		[yY][eE][sS]|[yY]) return 0 ;;
+		[nN][nO]|[nN]|"")  return 1 ;;
+		*)
+			echo -n "Seriously, Y or N... "
+			ask-are-you-sure;
+			return $?
+			;;
+	esac
+}
+
+# EOF ask-are-you-sure

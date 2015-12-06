@@ -1,0 +1,8 @@
+#!/bin/sh
+
+function is-true()
+{
+	eval "$@" && dbg_et || dbg_ef
+}
+
+# EOF is-true

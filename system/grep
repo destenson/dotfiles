@@ -1,6 +1,6 @@
 # Tell grep to highlight matches
 
-[ "x$BASH_SOURCE" == "" ] && return # we assume bash for now
+#[ "x$BASH_SOURCE" == "" ] && return # we assume bash for now
 
 if is-supported "grep --color a <<< a"; then
     GREP_OPTIONS+=" --color=auto"
@@ -17,6 +17,9 @@ elif is-supported "echo | grep --exclude=.cvs ''"; then
         GREP_OPTIONS+=" --exclude=$PATTERN"
     done
 fi
+unset PATTERN
 
 alias grep="grep $GREP_OPTIONS"
 export GREP_COLOR='1;32'
+
+# EOF

@@ -1,10 +1,5 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
-#[ "x$BASH_SOURCE" == "" ] && return # we assume bash for now
-#
-#. $(dirname "$BASH_SOURCE")/function
-#. $(dirname "$BASH_SOURCE")/../bash/path
-
 # Change one of the '0's to something else to "comment out" this whole file.
 if [ 0 -eq 0 ]; then
 
@@ -23,7 +18,7 @@ prepend-path "${HOME}/.work/bin"
 # Add a path for python
 if ! is-executable python; then
   #echo python is not executable
-  if [ is-linux > /dev/null ]; then
+  if is-linux; then
 	echo "Running on Linux"
     # TODO 
 	echo "WARNING: repo requires a python interpreter"
@@ -45,8 +40,6 @@ if ! is-executable python; then
 	echo "WARNING: repo requires a python interpreter"
   fi
 fi
-
-export PATH="/c/Users/deste_000/bin:/c/Users/deste_000/dotfiles/bin:/usr/bin:/bin:/mingw64/bin:/usr/local/bin:/c/Program Files (x86)/OpenSSH/bin:/c/Users/deste_000/AppData/Roaming/npm:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
 
 # Remove duplicates from PATH

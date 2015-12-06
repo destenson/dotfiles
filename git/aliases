@@ -1,0 +1,61 @@
+# Autoincluded by .bash_profile (TODO: review this file)
+
+is-executable git || echo "git was not found"
+
+# git quickies
+
+alias gk='gitk --all&'
+alias gx='gitx --all'
+
+function def_alias() {
+	[ $# != 4 ] && echo ERROR && return
+	local target=$1
+	local short=$2
+	local medium=$3
+	local long=$4
+	eval 'alias $short="$target"'
+	eval 'alias $medium="$target"'
+	eval 'alias $long="$target"'
+}
+
+def_alias 'git'        'g'   'git'       'git'
+def_alias 'g help'     'gh'  'ghelp'     'git_help'
+def_alias 'g status'   'gs'  'gstat'     'git_status'
+def_alias 'g add'      'ga'  'gadd'      'git_add'
+def_alias 'g commit'   'gc'  'gcommit'   'git_commit'
+def_alias 'g branch'   'gb'  'gbranch'   'git_branch'
+def_alias 'g diff'     'gd'  'gdiff'     'git_diff'
+def_alias 'g checkout' 'go'  'gcheckout' 'git_checkout'
+def_alias 'g fetch'    'gf'  'gfetch'    'git_fetch'
+def_alias 'g merge'    'gmg' 'gmerge'    'git_merge'
+def_alias 'g flow'     'gfl' 'gflow'     'git_flow'
+
+#alias g='git'
+#alias gh='g help'
+#alias gs='g status'
+#alias ga='g add'
+#alias gc='g commit'
+#alias gb='g branch'
+#alias gd='g diff'
+#alias go='g checkout '
+#alias gf='g fetch'
+#alias gmg='g merge'
+#alias gfl='g flow'
+
+#alias ghelp='g help'
+#alias gstat='g status'
+#alias gadd='g add'
+#alias gcommit='g commit'
+#alias gbranch='g branch'
+#alias gdiff='g diff'
+#alias gcheckout='g checkout'
+#alias gfetch='g fetch'
+#alias gmerge='g merge'
+#alias gflow='g flow'
+
+#TODO: alias gignore='git_ignore.sh'
+
+alias git_fetch_all='git fetch --progress --prune origin'
+
+
+# EOF

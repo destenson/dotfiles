@@ -1,23 +1,6 @@
 # Dependencies
 # ./function
 
-# Webserver
-
-srv() {
-	is-executable http-server || echo "Requires http-server" && return
-    local PORT=${1:-80}
-    if [ "$PORT" -le "1024" ]; then
-		is-executable sudo && sudo -v || echo "Requires sudo"
-	fi
-    http-server . -p "$PORT" -c-1
-}
-
-# Get IP from hostname
-
-hostname2ip() {
-    ping -4 -n 1 "$1" | egrep -m1 -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-}
-
 # Upload file to transfer.sh
 # https://transfer.sh/
 # https://github.com/dutchcoders/transfer.sh/

@@ -1,34 +1,8 @@
 # Autoincluded by .bash_profile (TODO: review this file)
 
-# Shortcuts
-alias _="sudo"
-alias g="git"
-alias v="vim"
-alias rrm="rm -rf"
-#alias json="json -c"
-
-#is-executable hub && eval "$(hub alias -s)" # alias git=hub
-
-# Global aliases
-#if $(is-supported "alias -g"); then
-#    alias -g G="| grep -i"
-#    alias -g H="| head"
-#    alias -g T="| tail"
-#    alias -g L="| less"
-#fi
-
 # List declared aliases, functions
-
 alias listaliases="alias | sed 's/=.*//'"
 alias listfunctions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'" # show non _prefixed functions
-
-## rsync
-#alias rsync="rsync -vh"
-
-## npm
-#alias ni="npm install"
-#alias nun="npm uninstall"
-#alias nup="npm update"
 
 # Network
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -38,25 +12,21 @@ alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
     alias "$method"="lwp-request -m '$method'"
 done
+unset method
 
 # Miscellaneous
 alias quit="exit"
 alias week="date +%V"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
 
-# "commented out" by the following line and the last one in the file
-if [ 0 -ne 0 ]; then
-
 # Shortcuts
 alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
-alias g="git"
+#alias g="git"
 alias h="history"
 alias j="jobs"
-
-
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
@@ -72,6 +42,36 @@ alias week='date +%V'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# Shortcuts
+#alias _="sudo"
+#alias g="git"
+#alias v="vim"
+#alias rrm="rm -rf"
+#alias json="json -c"
+
+#is-executable hub && eval "$(hub alias -s)" # alias git=hub
+
+# Global aliases
+#if $(is-supported "alias -g"); then
+#    alias -g G="| grep -i"
+#    alias -g H="| head"
+#    alias -g T="| tail"
+#    alias -g L="| less"
+#fi
+
+## rsync
+#alias rsync="rsync -vh"
+
+## npm
+#alias ni="npm install"
+#alias nun="npm uninstall"
+#alias nup="npm update"
+
+# "commented out" by the following line and the last one in the file
+if [ 0 -ne 0 ]; then
+true
+
 
 ## Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 #alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'
@@ -171,3 +171,5 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias reload="exec $SHELL -l"
 
 fi # if [ 0 -ne 0 ]; then
+
+# EOF

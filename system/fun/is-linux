@@ -1,0 +1,7 @@
+#!/bin/sh
+
+function is-linux() {
+  str-contains "$OS" "Linux" $*
+}
+
+# EOF is-linux

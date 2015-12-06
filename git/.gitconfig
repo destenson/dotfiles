@@ -1,0 +1,115 @@
+[user]
+	name = First Last
+	email = flast@email.com
+
+#[github]
+#    user = flast
+
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = vim
+    filemode = false
+    trustctime = false
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab	# Which whitespace problems should git recognize: any whitespace at the end of a line, and mixed spaces and tabs
+
+[alias]
+    st = status
+    sts = status -sb
+    stl = ls-files -m -o --exclude-standard
+    ci = commit
+    br = branch
+    co = checkout
+    cr = clone --recursive
+    df = diff --word-diff
+    unstage = reset --hard HEAD
+    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    ll = log --pretty=oneline --graph --abbrev-commit
+    lm = log --pretty=format:'* %s (%h)'
+    lg = log -p
+    g = grep --break --heading --line-number
+    amend = commit --amend --reuse-message=HEAD
+    contrib = shortlog --summary --numbered
+    show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
+    ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
+    pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+
+[pager]
+    diff = diff-highlight | less
+
+[color]
+	ui = auto	# enable colors if possible
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[color "diff-highlight"]
+    oldNormal = "red bold"
+    oldHighlight = "red bold 52"
+    newNormal = "green bold"
+    newHighlight = "green bold 22"
+
+[credential]
+	helper = wincred
+
+[grep]
+    lineNumber = true
+
+[help]
+    autocorrect = 1
+
+[difftool]
+    prompt = false
+
+[mergetool]
+    prompt = false
+
+[push]
+	default = tracking	# When pushing without giving a refspec, push the current branch to its upstream branch. See the git config man page for more possible options.
+#[push]
+#    default = simple
+
+[fetch]
+  prune = true
+
+[diff]
+	renames = copies		# Allow git diff to do basic rename and copy detection (see man page for details)
+	mnemonicprefix = true	# Tell git diff to use mnemonic prefixes ([i]ndex, [w]ork tree, [c]ommit, [o]bject) instead of the standard a and b notation (see man page for details)
+#[diff]
+#	tool = Kaleidoscope
+#[difftool "Kaleidoscope"]
+#	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+#[difftool "sourcetree"]
+#	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+#	path = 
+
+[merge]
+	conflictstyle = diff3
+	defaultToUpstream = true
+	stat = true	# Always show a diffstat at the end of a merge:
+#	tool = Kaleidoscope
+#[mergetool "Kaleidoscope"]
+#	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+#	trustExitCode = true
+#[mergetool "sourcetree"]
+#	2cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+#	trustExitCode = true
+
+[branch]
+	autosetupmerge = true	# When branching off a remote branch, automatically let the local branch track the remote branch (see man page for details)
+
+[rerere]
+	enabled = true	# Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on.
+#[advice]
+#	pushNonFastForward = false	# Disable the advice shown by Git when you attempt to push something that’s not fast forward-able
+#	statusHints = false	# Disable "how to stage/unstage/add" hints given by git status
+

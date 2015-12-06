@@ -1,8 +1,5 @@
 # Bash
 
-# Add tab completion for many Bash commands
-src /etc/bash_completion
-
 # Dotfiles
 
 _dotfiles_completions() {

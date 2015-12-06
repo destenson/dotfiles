@@ -1,0 +1,8 @@
+#!/bin/env bash
+
+function git_unstage()
+{
+	git reset -q HEAD -- "$@"
+}
+
+# EOF is_samedir

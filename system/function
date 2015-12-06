@@ -1,103 +1,36 @@
-#TODO: evaluate file
-#TODO: list any and all files this is dependent upon
-
-verbose-file-entry() { echo "->$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
-verbose-file-exit()  { echo "<-$2$(basename $1)" && [ $# -gt 2 ] && echo "$*"; }
-
-basic-file-entry() { echo "->$2$(basename $1)"; }
-basic-file-exit()  { echo "<-$2$(basename $1)"; }
-
-quiet-file-entry() { true; }
-quiet-file-exit() { true; }
+#!/bin/env bash
+# Autoincluded by .bash_profile (TODO: review this file)
 
 # Change this to 
 #SYSFUN=quiet
-SYSFUN=basic
-#SYSFUN=verbose
+#SYSFUN=basic
+SYSFUN=verbose
 
-${SYSFUN}-file-entry $BASH_SOURCE "system/" '
-  system/function: provides
-    get VAR_NAME
-	is-true $bash_script_code
-	is-executable "$some_path"
-	prepend-to-path PATH_VAR_NAME "$some_path"
-	prepend-path "prepend-to-path PATH"
-'
+${SYSFUN}-file-entry $BASH_SOURCE "system/" "
+  system/function provides: $(cd fun; ls | grep -v '^[A-Z]*$')"
 
-# Get named var (usage: get "VAR_NAME")
-get() {
-    echo "${!1}"
-}
-
-is-true() {
-	eval "$*" && echo "true" || { echo false && false; }
-}
-
-# Executable
-is-executable() {
-    local BIN=$((command -v "$1" || which "$1") 2>/dev/null)
-    [[ ! $BIN == "" && -x $BIN ]]
-}
-
-# Add to path
-prepend-to-path() {
-  local path_var="$1"								# the name of the PATH variable (such as "PATH")
-  local to_add="$2"									# the directory to add the to given PATH variable
-  if [ -d "$to_add" ]; then							# if directory to add exists
-    local cur_path=$(eval echo -n "\$$1")			# evaluate the current contents of the variable
-    eval "$path_var='${to_add}:${cur_path}'"		# add it
-  fi
-}
-
-alias prepend-path='prepend-to-path PATH'
-
-# Show 256 TERM colors
-colors() {
-  local X=$(tput op)
-  local Y=$(printf %$((COLUMNS-6))s)
-  for i in {0..256}; do
-    o=00$i;
-    echo -e ${o:${#o}-3:3} $(tput setaf $i;tput setab $i)${Y// /=}$X;
-  done
-}
-
-# Calculator
-calc() {
-    echo "$*" | bc -l;
-}
-
-# Code sourcer
-alias .='src'
-src() {
-  if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
-    [ -f "$*" -a -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
-  else
-    [ -f "$*" -a -r "$*" ] && source "$*"
-  fi
-}
-
-# String contains
-str-contains()
+load_fun_dir()
 {
-  if [ $# -gt 2 -a "x$3" == "x-v" ]; then
-    { echo "$1" | grep "$2" > /dev/null 2>&1; } && echo "$1 not contain $2" || echo "$1 does not contain $2"
-  else
-    echo "$1" | grep "$2" > /dev/null 2>&1
-  fi
+	# Useful bash functions are defined each in their own file under ./fun/
+	pushd fun &> /dev/null && {\
+		local funfile
+		for funfile in *; do
+			# skips all files named with all caps so README's are not included :)
+			[[ $funfile =~ ^[A-Z]*$
+			|| $funfile = *_profile
+			|| $funfile = global.*
+			|| $funfile = *~
+			|| $funfile = *.bak
+			|| $funfile = *.txt
+			|| $funfile = *.sh ]] || \
+			[[ -f "$funfile" && -r "$funfile" ]] && {
+				[ "$SYSFUN" = quiet ] || echo "Attempting to source fun/$funfile";
+			} && . "$funfile"
+		done;
+	} && popd &> /dev/null
 }
 
-ask-are-you-sure()
-{
-  read -r -p "Are you sure? [y/N] " response
-  case $response in
-    [yY][eE][sS]|[yY]) true ;;
-    [nN][nO]|[nN]|"")  false ;;
-    *)
-      echo -n "Seriously, Y or N... "
-      ask-are-you-sure
-      ;;
-  esac
-}
+load_fun_dir
 
 ${SYSFUN}-file-exit $BASH_SOURCE "system/"
 

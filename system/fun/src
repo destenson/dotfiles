@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Code sourcer
+function src() {
+  # TODO: convert this to use the smarter functions defined in _profile
+  if [ "x$VERBOSE_SOURCING" == "xtrue" ]; then
+    [ -f "$*" -a -r "$*" ] && { echo "Sourcing \"$*\"" && source "$*" && echo "Sourced \"$*\""; } || echo "Failed to source: \"$*\""
+  else
+    [ -f "$*" -a -r "$*" ] && source "$*"
+  fi
+}
+
+# EOF TEMPLATE

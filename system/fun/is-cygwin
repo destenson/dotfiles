@@ -1,0 +1,7 @@
+#!/bin/sh
+
+function is-cygwin(){
+  str-contains "$OS" "Cygwin" $*
+}
+
+# EOF is-cygwin

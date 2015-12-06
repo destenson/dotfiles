@@ -1,0 +1,7 @@
+#!/bin/sh
+
+function is-mac() {
+  str-contains "$OS" "Darwin" $* || str-contains "$OS" "OSX" $*
+}
+
+# EOF is-mac
