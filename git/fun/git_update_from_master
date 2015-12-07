@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# from http://genomewiki.ucsc.edu/index.php/Working_with_branches_in_Git#How_do_I_keep_my_branch_up_to_date.3F
+
+git_update_from_branch()
+{
+	[[ $# -eq 2 && ! -z "$1" && ! -z "$2" ]] || return 1; # TODO: error/usage message
+	local master="$1"
+	local branch="$2"
+	git checkout "$master"
+	git pull
+	git checkout "$branch"
+	git merge "$master"
+}
+
+git_update_from_master()
+{
+	local branch="$1"
+	git_update_from_branch master "$branch"
+}
+
+# EOF
+
