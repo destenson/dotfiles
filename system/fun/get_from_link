@@ -1,0 +1,57 @@
+#!/bin/sh
+
+#
+# TODO: 
+# get_from_link : will take a url to a download page and find the download
+# matching the given pattern.
+#
+#
+
+# simple test: https://update.gitter.im/win/latest
+#
+#<!DOCTYPE HTML>
+#<html lang="en-US">
+#  <head>
+#    <meta charset="UTF-8">
+#    <meta http-equiv="refresh" content="0;url=https://update.gitter.im/win/GitterSetup-2.4.0.exe">
+#    <script language="javascript">
+#      window.location.href = "https://update.gitter.im/win/GitterSetup-2.4.0.exe";
+#    </script>
+#    <title>Page Redirection</title>
+#  </head>
+#  <body>
+#    <p>If you are not redirected automatically, follow the <a href="https://update.gitter.im/win/GitterSetup-2.4.0.exe">link to download Gitter</a></p>
+#  </body>
+#</html>
+#
+# any of the following should result in GitterSetup-2.4.0.exe being downloaded into the current directory.
+# get_from_link https://update.gitter.im/win/latest GitterSetup
+# get_from_link https://update.gitter.im/win/latest '*.exe'
+# get_from_link https://update.gitter.im/win/latest 'GitterSetup-*.exe'
+# get_from_link https://update.gitter.im/win/latest 'GitterSetup-?.?.?.exe'
+# get_from_link https://update.gitter.im/win/latest 'GitterSetup-[0-9].[0-9].[0-9].exe'
+#
+#
+
+validate_args()
+{
+	[ $# -eq 2 ] || return 1 # TODO: error message
+}
+
+get_from_link()
+{
+	validate_args "$@" || return 1 # TODO: error message
+
+	local url="$1"
+	local matchstr="$2"
+	local html=$(curl --url "$url" 2> /dev/null)
+	local postgrep=$(grep -E "$matchstr" <<< "$html")
+	local fileurl=$($DOTFILES_DIR/sed/list_urls.sed <<< "$html" | head -n 1)
+	[ -z "$fileurl" ] && return 1 # TODO: error message
+	local filename=$($DOTFILES_DIR/sed/fbasename.sed <<< "$fileurl")
+	[ -z "$filename" ] && return 1 # TODO: error message
+	
+	curl --url "$fileurl" > "$filename"
+}
+
+#EOF 
