@@ -1,5 +1,21 @@
 # this file has become the file from 2 disparate branches mixed into one
 
+I haven't yet made this mine.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # .files
 
 These are my dotfiles. Take anything you want, but at your own risk.
