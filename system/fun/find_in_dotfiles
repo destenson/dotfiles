@@ -1,0 +1,10 @@
+#!/bin/sh
+
+find_in_dotfiles()
+{
+	# TODO: use $DOTFILE_DIR
+	grep -R ~/dotfiles/* "$@"
+}
+
+# EOF find_in_dotfiles
+
