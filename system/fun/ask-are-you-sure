@@ -1,6 +1,8 @@
 #!/bin/sh
 
-function ask-are-you-sure()
+# TODO: test to verify that this works in sh
+
+ask-are-you-sure()
 {
 	read -r -p "Are you sure? [y/N] " response
 	case $response in
